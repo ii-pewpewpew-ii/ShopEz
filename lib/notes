@@ -1,0 +1,2 @@
+Firebase_authProvider.dart -> using getter method for currentUser->
+could result in not logging in 
