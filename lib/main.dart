@@ -17,9 +17,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
-        loginRoute: (context) => const loginView(),
-        signupRoute: (context) => const signupView(),
-        verifyEmailRoute: (context) => const verifyEmailView()
+        loginRoute: (context) => const LoginView(),
+        signupRoute: (context) => const SignupView(),
+        verifyEmailRoute: (context) => const VerifyEmailView()
       },
       home: Scaffold(
         body: FutureBuilder(
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
             switch (snapshot.connectionState) {
               case ConnectionState.done:
                 {
-                  return const homePage();
+                  return const HomePage();
                 }
               default:
                 {

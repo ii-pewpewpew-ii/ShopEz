@@ -2,8 +2,8 @@ import 'package:amazone_clone/constants/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class verifyEmailView extends StatelessWidget {
-  const verifyEmailView({Key? key}) : super(key: key);
+class VerifyEmailView extends StatelessWidget {
+  const VerifyEmailView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -3,21 +3,21 @@
 import 'package:amazone_clone/constants/routes.dart';
 import 'package:amazone_clone/services/auth/auth_exceptions.dart';
 import 'package:amazone_clone/services/auth/auth_service.dart';
-import 'package:amazone_clone/views/verify_email_view.dart';
+//import 'package:amazone_clone/views/verify_email_view.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+//import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../utilities/error_snackbox.dart';
 
-class loginView extends StatefulWidget {
-  const loginView({Key? key}) : super(key: key);
+class LoginView extends StatefulWidget {
+  const LoginView({Key? key}) : super(key: key);
 
   @override
-  State<loginView> createState() => _loginViewState();
+  State<LoginView> createState() => _LoginViewState();
 }
 
-class _loginViewState extends State<loginView> {
+class _LoginViewState extends State<LoginView> {
   late final TextEditingController _email;
   late final TextEditingController _password;
 
@@ -90,7 +90,6 @@ class _loginViewState extends State<loginView> {
               )),
               Flexible(
                 child: TextField(
-                  
                   enableSuggestions: false,
                   controller: _email,
                   decoration: const InputDecoration(

@@ -1,14 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+// ignore_for_file: sized_box_for_whitespace
 
-class homePage extends StatefulWidget {
-  const homePage({Key? key}) : super(key: key);
+import 'package:flutter/material.dart';
+//import 'package:carousel_slider/carousel_slider.dart';
+
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<homePage> createState() => _homePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _homePageState extends State<homePage> {
+class _HomePageState extends State<HomePage> {
   bool issearch = false;
   late ScrollController vertical, horizontal;
   @override
@@ -57,6 +59,7 @@ class _homePageState extends State<homePage> {
           IconButton(
               onPressed: () {
                 setState(() {
+                  // ignore: unnecessary_this
                   this.issearch = !this.issearch;
                 });
               },
@@ -73,7 +76,7 @@ class _homePageState extends State<homePage> {
           //controller: vertical,
           scrollDirection: Axis.horizontal,
           itemCount: 6,
-          
+
           itemBuilder: (context, index) => itemBuilder(),
         ),
       ),

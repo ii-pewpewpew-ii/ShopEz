@@ -3,21 +3,19 @@ import 'package:amazone_clone/services/auth/auth_exceptions.dart';
 import 'package:amazone_clone/services/auth/auth_service.dart';
 import 'package:amazone_clone/services/auth/firebase_auth_provider.dart';
 import 'package:amazone_clone/utilities/error_snackbox.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class signupView extends StatefulWidget {
-  const signupView({
+class SignupView extends StatefulWidget {
+  const SignupView({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<signupView> createState() => _signupViewState();
+  State<SignupView> createState() => _SignupViewState();
 }
 
-class _signupViewState extends State<signupView> {
+class _SignupViewState extends State<SignupView> {
   late final TextEditingController _email;
   late final TextEditingController _password;
   final authService = FirebaseAuthProvider;
