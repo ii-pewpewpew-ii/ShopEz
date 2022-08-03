@@ -1,4 +1,0 @@
-#Wed Aug 03 10:21:12 IST 2022
-base.0=D\:\\amazone_clone\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
-renamed.0=classes.dex
-path.0=classes.dex
