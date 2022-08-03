@@ -10,8 +10,11 @@ class homePage extends StatefulWidget {
 
 class _homePageState extends State<homePage> {
   bool issearch = false;
+  late ScrollController vertical, horizontal;
   @override
   void initState() {
+    vertical = ScrollController();
+    horizontal = ScrollController();
     issearch = false;
     super.initState();
   }
@@ -19,69 +22,87 @@ class _homePageState extends State<homePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            backgroundColor: !issearch
-                ? const Color.fromARGB(
-                    255,
-                    34,
-                    46,
-                    62,
-                  )
-                : Colors.white,
-            expandedHeight: 300,
-            flexibleSpace: ListView(
-              children: [
-                CarouselSlider(
-                  items: [
-                    Container(
-                      //margin: const EdgeInsets.fromLTRB(left, top, right, bottom)
-                      child: Image.asset('assets/banner1.jpeg'),
+      appBar: AppBar(
+        backgroundColor: !issearch
+            ? const Color.fromARGB(
+                255,
+                34,
+                46,
+                62,
+              )
+            : Colors.white,
+        leading: Icon(
+          Icons.menu,
+          color: !issearch ? Colors.white : Colors.black,
+        ),
+        title: !issearch
+            ? Center(
+                child: Image.asset(
+                  'assets/logo.png',
+                  width: 100,
+                ),
+              )
+            : const TextField(
+                style: TextStyle(color: Colors.black),
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                    color: Colors.black,
+                    width: 2,
+                  )),
+                  icon: Icon(Icons.search),
+                  hintText: 'Searching For?',
+                )),
+        actions: [
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  this.issearch = !this.issearch;
+                });
+              },
+              icon: !issearch
+                  ? const Icon(
+                      Icons.search,
                     )
-                  ],
-                  options: CarouselOptions(),
-                )
-              ],
-            ),
-            leading: Icon(
-              Icons.menu,
-              color: !issearch ? Colors.white : Colors.black,
-            ),
-            title: !issearch
-                ? Center(
-                    child: Image.asset(
-                      'assets/logo.png',
-                      width: 100,
-                    ),
-                  )
-                : const TextField(
-                    style: TextStyle(color: Colors.black),
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                        color: Colors.white,
-                        width: 1.5,
-                      )),
-                      icon: Icon(Icons.search),
-                      hintText: 'Searching For?',
-                    )),
-            actions: [
-              IconButton(
-                  onPressed: () {
-                    setState(() {
-                      this.issearch = !this.issearch;
-                    });
-                  },
-                  icon: !issearch
-                      ? const Icon(
-                          Icons.search,
-                        )
-                      : const Icon(Icons.close, color: Colors.black))
-            ],
-          )
+                  : const Icon(Icons.close, color: Colors.black))
         ],
       ),
+      body: Container(
+        height: 150,
+        child: ListView.builder(
+          //controller: vertical,
+          scrollDirection: Axis.horizontal,
+          itemCount: 6,
+          
+          itemBuilder: (context, index) => itemBuilder(),
+        ),
+      ),
+    );
+  }
+
+  Widget categoryBuilder() {
+    return ListView(
+        controller: vertical,
+        scrollDirection: Axis.horizontal,
+        children: [
+          itemBuilder(),
+          itemBuilder(),
+          itemBuilder(),
+          itemBuilder(),
+        ]);
+  }
+
+  Widget itemBuilder() {
+    return Container(
+      height: 100,
+      width: 100,
+      margin: const EdgeInsets.all(10),
+      decoration: BoxDecoration(color: Colors.black, boxShadow: [
+        BoxShadow(
+            color: Colors.black.withOpacity(0.3),
+            blurRadius: 15,
+            spreadRadius: 5),
+      ]),
     );
   }
 }
