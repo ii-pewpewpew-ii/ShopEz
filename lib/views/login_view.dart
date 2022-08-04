@@ -3,6 +3,7 @@
 import 'package:amazone_clone/constants/routes.dart';
 import 'package:amazone_clone/services/auth/auth_exceptions.dart';
 import 'package:amazone_clone/services/auth/auth_service.dart';
+import 'package:amazone_clone/views/home_view.dart';
 //import 'package:amazone_clone/views/verify_email_view.dart';
 import 'package:flutter/material.dart';
 //import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -141,9 +142,11 @@ class _LoginViewState extends State<LoginView> {
                       final user = AuthService.firebase().currentUser;
                       if (user != null) {
                         if (user.isEmailVerified) {
-                          //To home page
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              customerHomeRoute, (route) => false);
                         } else {
-                          //To verify email page and send email again
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              verifyEmailRoute, (route) => false);
                         }
                       }
                     } on InvalidEmailAuthException {
@@ -207,8 +210,12 @@ class _LoginViewState extends State<LoginView> {
             width: MediaQuery.of(context).size.width - 100,
             child: TextButton(
                 onPressed: () {
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil(signupRoute, (route) => false);
+                  //For Testing
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      sellerHomeRoute, (route) => false);
+
+                  //Navigator.of(context)
+                  //   .pushNamedAndRemoveUntil(signupRoute, (route) => false);
                 },
                 child: const Text(signup)),
           ),

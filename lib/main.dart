@@ -2,6 +2,8 @@ import 'package:amazone_clone/constants/routes.dart';
 import 'package:amazone_clone/services/auth/auth_service.dart';
 import 'package:amazone_clone/views/home_view.dart';
 import 'package:amazone_clone/views/login_view.dart';
+import 'package:amazone_clone/views/seller/addProductsView.dart';
+import 'package:amazone_clone/views/seller/seller_dash.dart';
 import 'package:amazone_clone/views/signup_view.dart';
 import 'package:amazone_clone/views/verify_email_view.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +21,10 @@ class MyApp extends StatelessWidget {
       routes: {
         loginRoute: (context) => const LoginView(),
         signupRoute: (context) => const SignupView(),
-        verifyEmailRoute: (context) => const VerifyEmailView()
+        verifyEmailRoute: (context) => const VerifyEmailView(),
+        addProductsFormRoute: (context) => const AddProductsFormView(),
+        sellerHomeRoute: (context) => const SellerHomeView(),
+        customerHomeRoute: ((context) => const HomePage())
       },
       home: Scaffold(
         body: FutureBuilder(
@@ -27,7 +32,7 @@ class MyApp extends StatelessWidget {
             switch (snapshot.connectionState) {
               case ConnectionState.done:
                 {
-                  return const HomePage();
+                  return const LoginView();
                 }
               default:
                 {

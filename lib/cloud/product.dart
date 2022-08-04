@@ -3,24 +3,23 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'constants.dart';
 
 class Product {
-  final String productId;
   final String productName;
   final String productPrice;
   final String productDescription;
   final String sellerName;
   final String productImage;
   final String category;
-
+  final String sellerId;
   Product(
       {required this.category,
-      required this.productId,
       required this.productName,
       required this.productPrice,
       required this.productDescription,
       required this.sellerName,
-      required this.productImage});
+      required this.productImage,
+      required this.sellerId});
   Product.fromSnapshot(QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
-      : productId = snapshot.id,
+      : sellerId = snapshot.data()[sellerIdFieldName] as String,
         category = snapshot.data()[productCategoryFieldName] as String,
         productName = snapshot.data()[productNameFieldName] as String,
         productDescription =
