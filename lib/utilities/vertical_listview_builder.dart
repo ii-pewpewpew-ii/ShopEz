@@ -1,25 +1,55 @@
 import 'package:amazone_clone/cloud/product.dart';
+import 'package:amazone_clone/services/auth/auth_service.dart';
+import 'package:amazone_clone/utilities/show_delete_product.dart';
+import 'package:amazone_clone/utilities/show_logout_dialoge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../constants/routes.dart';
+import '../enums/menuaction.dart';
+
+typedef CallBack = void Function(Product prod);
 
 class ListViewBuilder extends StatelessWidget {
-  const ListViewBuilder({Key? key, required this.products}) : super(key: key);
+  const ListViewBuilder(
+      {Key? key, required this.products, required this.onDeletePressed})
+      : super(key: key);
   final Iterable<Product> products;
+  final CallBack onDeletePressed;
+  //final CallBack onUpdatePressed;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+            leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(addProductsFormRoute);
+              },
+              icon: const Icon(Icons.add),
+            ),
             actions: [
-              IconButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(addProductsFormRoute);
-                },
-                icon: const Icon(Icons.add),
-              ),
+              PopupMenuButton<MenuAction>(onSelected: (value) async {
+                switch (value) {
+                  case MenuAction.logout:
+                    final decision = await showLogoutDialog(context);
+                    if (decision) {
+                      await AuthService.firebase().logout();
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                        loginRoute,
+                        (route) => false,
+                      );
+                    }
+                    break;
+                }
+              }, itemBuilder: (context) {
+                return const [
+                  PopupMenuItem<MenuAction>(
+                    value: MenuAction.logout,
+                    child: Text("logout"),
+                  )
+                ];
+              }),
             ],
             backgroundColor: const Color.fromARGB(
               255,
@@ -50,7 +80,12 @@ class ListViewBuilder extends StatelessWidget {
                       motion: const DrawerMotion(),
                       children: [
                         SlidableAction(
-                          onPressed: (context) {},
+                          onPressed: (context) async {
+                            final choice = await showDeleteDialog(context);
+                            if (choice) {
+                              onDeletePressed(product);
+                            }
+                          },
                           icon: Icons.delete,
                           backgroundColor: Colors.red,
                         ),
@@ -110,6 +145,7 @@ class ListViewBuilder extends StatelessWidget {
                                         style: GoogleFonts.montserrat(
                                             fontSize: 12,
                                             fontWeight: FontWeight.bold)),
+                                  
                                   )),
                               SizedBox(
                                   width: MediaQuery.of(context).size.width * .5,

@@ -211,11 +211,9 @@ class _LoginViewState extends State<LoginView> {
             child: TextButton(
                 onPressed: () {
                   //For Testing
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                      sellerHomeRoute, (route) => false);
 
-                  //Navigator.of(context)
-                  //   .pushNamedAndRemoveUntil(signupRoute, (route) => false);
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil(signupRoute, (route) => false);
                 },
                 child: const Text(signup)),
           ),

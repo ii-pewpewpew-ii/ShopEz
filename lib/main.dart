@@ -1,5 +1,6 @@
 import 'package:amazone_clone/constants/routes.dart';
 import 'package:amazone_clone/services/auth/auth_service.dart';
+import 'package:amazone_clone/views/extended_items_view.dart';
 import 'package:amazone_clone/views/home_view.dart';
 import 'package:amazone_clone/views/login_view.dart';
 import 'package:amazone_clone/views/seller/addProductsView.dart';
@@ -24,7 +25,8 @@ class MyApp extends StatelessWidget {
         verifyEmailRoute: (context) => const VerifyEmailView(),
         addProductsFormRoute: (context) => const AddProductsFormView(),
         sellerHomeRoute: (context) => const SellerHomeView(),
-        customerHomeRoute: ((context) => const HomePage())
+        customerHomeRoute: ((context) => const HomePage()),
+        //itemDetailsRoute :(context) => ItemDetails(product:prod))
       },
       home: Scaffold(
         body: FutureBuilder(
@@ -32,6 +34,7 @@ class MyApp extends StatelessWidget {
             switch (snapshot.connectionState) {
               case ConnectionState.done:
                 {
+                  //return const SellerHomeView();
                   return const LoginView();
                 }
               default:

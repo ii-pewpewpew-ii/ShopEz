@@ -1,13 +1,16 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:amazone_clone/cloud/cloud_service_products.dart';
 import 'package:amazone_clone/cloud/constants.dart';
+import 'package:amazone_clone/cloud/product.dart';
 import 'package:amazone_clone/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AddProductsFormView extends StatefulWidget {
   const AddProductsFormView({
+    
     Key? key,
   }) : super(key: key);
 
@@ -166,7 +169,16 @@ class _AddProductsFormViewState extends State<AddProductsFormView> {
       onPressed: () async {
         final isValid = formKey.currentState!.validate();
         if (isValid) {
-          await cloud.createNewProduct(
+          final documentId = await cloud.createNewProduct(
+              category: ' ',
+              productName: ' ',
+              productPrice: ' ',
+              productDescription: ' ',
+              sellerName: ' ',
+              productImage: ' ',
+              sellerId: ' ');
+          await cloud.updateProduct(
+              documentId: documentId,
               category: productCategory,
               productName: productName,
               productPrice: productPrice,
@@ -174,6 +186,7 @@ class _AddProductsFormViewState extends State<AddProductsFormView> {
               sellerName: sellerName,
               productImage: productImage,
               sellerId: sellerId);
+          Navigator.of(context).pop();
         }
       },
       child: const Text('Add Product'));
