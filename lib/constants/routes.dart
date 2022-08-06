@@ -5,3 +5,4 @@ const String addProductsFormRoute = '/addProducts/';
 const String sellerHomeRoute = '/sellerHome/';
 const String customerHomeRoute = '/customerHome';
 const String itemDetailsRoute = '/itemDetails/';
+const String updateProductRoute = '/updateProduct/';

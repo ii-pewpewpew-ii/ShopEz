@@ -1,10 +1,10 @@
 import 'package:amazone_clone/constants/routes.dart';
 import 'package:amazone_clone/services/auth/auth_service.dart';
-import 'package:amazone_clone/views/extended_items_view.dart';
 import 'package:amazone_clone/views/home_view.dart';
 import 'package:amazone_clone/views/login_view.dart';
 import 'package:amazone_clone/views/seller/addProductsView.dart';
 import 'package:amazone_clone/views/seller/seller_dash.dart';
+import 'package:amazone_clone/views/seller/updateProduct.dart';
 import 'package:amazone_clone/views/signup_view.dart';
 import 'package:amazone_clone/views/verify_email_view.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
         addProductsFormRoute: (context) => const AddProductsFormView(),
         sellerHomeRoute: (context) => const SellerHomeView(),
         customerHomeRoute: ((context) => const HomePage()),
+        updateProductRoute : ((context) => const UpdateProductsFormView())  
         //itemDetailsRoute :(context) => ItemDetails(product:prod))
       },
       home: Scaffold(

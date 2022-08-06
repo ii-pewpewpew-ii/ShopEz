@@ -2,7 +2,6 @@
 
 import 'package:amazone_clone/cloud/cloud_service_products.dart';
 import 'package:amazone_clone/cloud/constants.dart';
-import 'package:amazone_clone/cloud/product.dart';
 import 'package:amazone_clone/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

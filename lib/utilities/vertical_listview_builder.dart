@@ -2,6 +2,7 @@ import 'package:amazone_clone/cloud/product.dart';
 import 'package:amazone_clone/services/auth/auth_service.dart';
 import 'package:amazone_clone/utilities/show_delete_product.dart';
 import 'package:amazone_clone/utilities/show_logout_dialoge.dart';
+import 'package:amazone_clone/views/seller/updateProduct.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -35,6 +36,7 @@ class ListViewBuilder extends StatelessWidget {
                     final decision = await showLogoutDialog(context);
                     if (decision) {
                       await AuthService.firebase().logout();
+                      // ignore: use_build_context_synchronously
                       Navigator.of(context).pushNamedAndRemoveUntil(
                         loginRoute,
                         (route) => false,
@@ -90,7 +92,10 @@ class ListViewBuilder extends StatelessWidget {
                           backgroundColor: Colors.red,
                         ),
                         SlidableAction(
-                          onPressed: (context) {},
+                          onPressed: (context) {
+                            Navigator.of(context).pushNamed(updateProductRoute,
+                                arguments: UpdateProductArgument(product));
+                          },
                           icon: Icons.change_circle,
                           backgroundColor: Colors.blue,
                         )
@@ -145,7 +150,6 @@ class ListViewBuilder extends StatelessWidget {
                                         style: GoogleFonts.montserrat(
                                             fontSize: 12,
                                             fontWeight: FontWeight.bold)),
-                                  
                                   )),
                               SizedBox(
                                   width: MediaQuery.of(context).size.width * .5,

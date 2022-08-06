@@ -1,11 +1,8 @@
 import 'package:amazone_clone/cloud/cloud_service_products.dart';
 import 'package:amazone_clone/cloud/product.dart';
-import 'package:amazone_clone/constants/routes.dart';
 import 'package:amazone_clone/services/auth/auth_service.dart';
 import 'package:amazone_clone/utilities/vertical_listview_builder.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_zoom_drawer/config.dart';
-import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 
 class SellerHomeView extends StatefulWidget {
   const SellerHomeView({Key? key}) : super(key: key);

@@ -3,12 +3,8 @@
 import 'package:amazone_clone/constants/routes.dart';
 import 'package:amazone_clone/services/auth/auth_exceptions.dart';
 import 'package:amazone_clone/services/auth/auth_service.dart';
-import 'package:amazone_clone/views/home_view.dart';
-//import 'package:amazone_clone/views/verify_email_view.dart';
 import 'package:flutter/material.dart';
-//import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../utilities/error_snackbox.dart';
 
 class LoginView extends StatefulWidget {
@@ -143,7 +139,7 @@ class _LoginViewState extends State<LoginView> {
                       if (user != null) {
                         if (user.isEmailVerified) {
                           Navigator.of(context).pushNamedAndRemoveUntil(
-                              customerHomeRoute, (route) => false);
+                              sellerHomeRoute, (route) => false);
                         } else {
                           Navigator.of(context).pushNamedAndRemoveUntil(
                               verifyEmailRoute, (route) => false);

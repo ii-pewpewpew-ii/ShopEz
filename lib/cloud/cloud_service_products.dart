@@ -1,6 +1,5 @@
 import 'package:amazone_clone/cloud/cloud_exceptions.dart';
 import 'package:amazone_clone/cloud/product.dart';
-import 'package:amazone_clone/services/auth/auth_user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'constants.dart';
 
