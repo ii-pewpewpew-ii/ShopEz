@@ -8,6 +8,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../constants/routes.dart';
 import '../enums/menuaction.dart';
+import '../views/extended_items_view.dart';
 
 typedef CallBack = void Function(Product prod);
 
@@ -69,7 +70,12 @@ class ListViewBuilder extends StatelessWidget {
           scrollDirection: Axis.vertical,
           itemBuilder: ((context, index) {
             final product = products.elementAt(index);
-            return SizedBox(
+            return Container(
+                height: 120,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                margin: const EdgeInsets.only(top: 5),
                 width: MediaQuery.of(context).size.width,
                 child: Card(
                   shape: RoundedRectangleBorder(
@@ -102,7 +108,7 @@ class ListViewBuilder extends StatelessWidget {
                       ],
                     ),
                     child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Padding(
                               padding: const EdgeInsets.all(2.0),
@@ -113,9 +119,13 @@ class ListViewBuilder extends StatelessWidget {
                                   maxWidth:
                                       MediaQuery.of(context).size.width * 0.25,
                                 ),
-                                child: Image.network(
-                                  product.productImage,
-                                  fit: BoxFit.fill,
+                                child: ClipRRect(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
+                                  child: Image.network(
+                                    product.productImage,
+                                    fit: BoxFit.fill,
+                                  ),
                                 ),
                               )),
                           Column(
@@ -161,6 +171,16 @@ class ListViewBuilder extends StatelessWidget {
                                             GoogleFonts.ubuntu(fontSize: 12)),
                                   )),
                             ],
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(left: 20),
+                            child: IconButton(
+                                onPressed: () {
+                                  Navigator.of(context).pushNamed(
+                                      itemDetailsRoute,
+                                      arguments: ItemToDisplay(product));
+                                },
+                                icon: const Icon(Icons.arrow_forward)),
                           )
                         ]),
                   ),

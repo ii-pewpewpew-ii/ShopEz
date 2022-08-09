@@ -1,5 +1,8 @@
 import 'package:amazone_clone/constants/routes.dart';
 import 'package:amazone_clone/services/auth/auth_service.dart';
+import 'package:amazone_clone/views/category_search.dart';
+import 'package:amazone_clone/views/extended_items_view.dart';
+import 'package:amazone_clone/views/home_page.dart';
 import 'package:amazone_clone/views/home_view.dart';
 import 'package:amazone_clone/views/login_view.dart';
 import 'package:amazone_clone/views/seller/addProductsView.dart';
@@ -26,8 +29,10 @@ class MyApp extends StatelessWidget {
         addProductsFormRoute: (context) => const AddProductsFormView(),
         sellerHomeRoute: (context) => const SellerHomeView(),
         customerHomeRoute: ((context) => const HomePage()),
-        updateProductRoute : ((context) => const UpdateProductsFormView())  
-        //itemDetailsRoute :(context) => ItemDetails(product:prod))
+        updateProductRoute: ((context) => const UpdateProductsFormView()),
+        itemDetailsRoute: ((context) => const ItemDetails()),
+        mainPageRoute: ((context) => const MainPage()),
+        searchPageRoute: ((context) => const CategorySearchView())
       },
       home: Scaffold(
         body: FutureBuilder(

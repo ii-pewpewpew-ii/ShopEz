@@ -9,7 +9,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AddProductsFormView extends StatefulWidget {
   const AddProductsFormView({
-    
     Key? key,
   }) : super(key: key);
 
@@ -22,7 +21,7 @@ class _AddProductsFormViewState extends State<AddProductsFormView> {
   String get sellerId => AuthService.firebase().currentUser!.id;
   final formKey = GlobalKey<FormState>();
   late String productName;
-  late String productPrice;
+  late int? productPrice;
   late String productDescription;
   late String sellerName;
   late String productImage;
@@ -129,7 +128,8 @@ class _AddProductsFormViewState extends State<AddProductsFormView> {
             return null;
           }
         },
-        onChanged: ((value) => setState(() => productPrice = value)),
+        onChanged: ((value) =>
+            setState(() => productPrice = int.parse(value))),
       );
   Widget buildProductImage() => TextFormField(
         decoration: const InputDecoration(

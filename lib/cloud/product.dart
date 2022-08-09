@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'constants.dart';
 
 class Product {
   final String productId;
   final String productName;
-  final String productPrice;
+  final int productPrice;
   final String productDescription;
   final String sellerName;
   final String productImage;
@@ -27,7 +26,7 @@ class Product {
         productName = snapshot.data()[productNameFieldName] as String,
         productDescription =
             snapshot.data()[productDescriptionFieldName] as String,
-        productPrice = snapshot.data()[productPriceFieldName] as String,
+        productPrice = snapshot.data()[productPriceFieldName] as int,
         sellerName = snapshot.data()[sellerNameFieldName] as String,
         productImage = snapshot.data()[productImageFieldName] as String;
 }

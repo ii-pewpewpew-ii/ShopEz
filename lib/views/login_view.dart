@@ -139,7 +139,7 @@ class _LoginViewState extends State<LoginView> {
                       if (user != null) {
                         if (user.isEmailVerified) {
                           Navigator.of(context).pushNamedAndRemoveUntil(
-                              sellerHomeRoute, (route) => false);
+                              mainPageRoute, (route) => false);
                         } else {
                           Navigator.of(context).pushNamedAndRemoveUntil(
                               verifyEmailRoute, (route) => false);
@@ -206,8 +206,6 @@ class _LoginViewState extends State<LoginView> {
             width: MediaQuery.of(context).size.width - 100,
             child: TextButton(
                 onPressed: () {
-                  //For Testing
-
                   Navigator.of(context)
                       .pushNamedAndRemoveUntil(signupRoute, (route) => false);
                 },

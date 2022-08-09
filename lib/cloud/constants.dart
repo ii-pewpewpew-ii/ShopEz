@@ -6,4 +6,5 @@ const String productImageFieldName = 'product_image';
 const String productCategoryFieldName = 'category';
 const String sellerIdFieldName = 'seller_id';
 const String sellerUserIdFieldName = 'seller_user_id';
+const String countFieldName = 'count';
 const categories = ['Technology', 'Grocery'];

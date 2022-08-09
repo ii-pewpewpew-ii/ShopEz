@@ -20,11 +20,11 @@ class _UpdateProductsFormViewState extends State<UpdateProductsFormView> {
   final cloud = CloudServices();
   String get sellerId => AuthService.firebase().currentUser!.id;
   final formKey = GlobalKey<FormState>();
-  late String productName;
-  late String productPrice;
-  late String productDescription;
-  late String sellerName;
-  late String productImage;
+  String? productName;
+  int? productPrice;
+  String? productDescription;
+  String? sellerName;
+  String? productImage;
   String? productCategory;
 
   @override
@@ -102,6 +102,7 @@ class _UpdateProductsFormViewState extends State<UpdateProductsFormView> {
           if (value!.length < 4) {
             return 'Name cannot be less than 4 characters';
           } else {
+            productName = initial;
             return null;
           }
         },
@@ -119,13 +120,14 @@ class _UpdateProductsFormViewState extends State<UpdateProductsFormView> {
           } else if (value.isEmpty) {
             return 'Product must Contain a description';
           } else {
+            productDescription ??= initial;
             return null;
           }
         },
         onChanged: ((value) => setState(() => productDescription = value)),
       );
-  Widget buildProductPrice({String? initial}) => TextFormField(
-        initialValue: initial,
+  Widget buildProductPrice({int? initial}) => TextFormField(
+        initialValue: initial.toString(),
         decoration: const InputDecoration(
           labelText: 'Product Price',
           border: OutlineInputBorder(),
@@ -134,10 +136,11 @@ class _UpdateProductsFormViewState extends State<UpdateProductsFormView> {
           if (value!.length > 150) {
             return 'Description cannot be more than 150 characters';
           } else {
+            productPrice ??= initial;
             return null;
           }
         },
-        onChanged: ((value) => setState(() => productPrice = value)),
+        onChanged: ((value) => setState(() => productPrice = int.parse(value))),
       );
   Widget buildProductImage({String? initial}) => TextFormField(
         initialValue: initial,
@@ -146,6 +149,14 @@ class _UpdateProductsFormViewState extends State<UpdateProductsFormView> {
           border: OutlineInputBorder(),
         ),
         onChanged: ((value) => setState(() => productImage = value)),
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'Provide an image';
+          } else {
+            productImage ??= initial;
+            return null;
+          }
+        },
       );
   Widget buildSellerName({String? initial}) => TextFormField(
         initialValue: initial,
@@ -158,6 +169,7 @@ class _UpdateProductsFormViewState extends State<UpdateProductsFormView> {
           if (value!.isEmpty) {
             return 'Seller Name cannot be empty';
           } else {
+            sellerName ??= initial;
             return null;
           }
         },

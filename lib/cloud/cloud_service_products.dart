@@ -1,7 +1,9 @@
+import 'package:amazone_clone/cloud/cart_Item.dart';
 import 'package:amazone_clone/cloud/cloud_exceptions.dart';
 import 'package:amazone_clone/cloud/product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'constants.dart';
+
 
 class CloudServices {
   //Singleton Creation
@@ -83,5 +85,27 @@ class CloudServices {
     } catch (e) {
       throw CouldNotRemoveProduct();
     }
+  }
+
+  Future<void> addProductToCart(
+      {required emailId, required productId, required count}) async {
+    final data = {countFieldName: count};
+    final cart = FirebaseFirestore.instance.collection(emailId);
+    cart.doc(productId).set(data);
+  }
+
+  Future<void> removeProductFromCart(
+      {required productId, required emailId}) async {
+    final cart = FirebaseFirestore.instance.collection(emailId);
+    cart.doc(productId).delete();
+  }
+  Stream<Iterable<Product>> getCartItems({required Iterable<String> productIds}){
+    return products.snapshots().map((event) => event.docs
+          .map((doc) => Product.fromSnapshot(doc))
+          .where((element) => productIds.contains(element.productId)));
+  }
+  Stream<Iterable<CartItem>> getCartProductIds({required email}){
+    final cart = FirebaseFirestore.instance.collection(email);
+    return cart.snapshots().map(((event) => event.docs.map((doc) => CartItem.fromdoc(doc)).where((element) => element == element)));
   }
 }
