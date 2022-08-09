@@ -166,9 +166,11 @@ class ListViewBuilder extends StatelessWidget {
                                   child: Padding(
                                     padding:
                                         const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                                    child: Text(product.productDescription,
-                                        style:
-                                            GoogleFonts.ubuntu(fontSize: 12)),
+                                    child: Text(
+                                      product.productDescription,
+                                      style: GoogleFonts.ubuntu(fontSize: 12),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                   )),
                             ],
                           ),

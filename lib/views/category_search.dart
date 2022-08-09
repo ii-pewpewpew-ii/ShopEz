@@ -121,9 +121,11 @@ class CategorySearchView extends StatelessWidget {
                                           padding: const EdgeInsets.fromLTRB(
                                               10, 5, 0, 0),
                                           child: Text(
-                                              product.productDescription,
-                                              style: GoogleFonts.ubuntu(
-                                                  fontSize: 12)),
+                                            product.productDescription,
+                                            style: GoogleFonts.ubuntu(
+                                                fontSize: 12),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
                                         )),
                                   ],
                                 ),

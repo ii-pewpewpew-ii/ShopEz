@@ -12,14 +12,14 @@ class SellerHomeView extends StatefulWidget {
 }
 
 class _SellerHomeViewState extends State<SellerHomeView> {
-  String get userId => AuthService.firebase().currentUser!.id;
+  String? get email => AuthService.firebase().currentUser!.email;
   final _cloudservice = CloudServices();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: StreamBuilder(
-      stream: _cloudservice.getProductBySellerId(sellerId: userId),
+      stream: _cloudservice.getProductBySellerId(sellerId: email),
       builder: ((context, snapshot) {
         switch (snapshot.connectionState) {
           case (ConnectionState.active):

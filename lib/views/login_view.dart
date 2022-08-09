@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:amazone_clone/cloud/cloud_service_products.dart';
 import 'package:amazone_clone/constants/routes.dart';
 import 'package:amazone_clone/services/auth/auth_exceptions.dart';
 import 'package:amazone_clone/services/auth/auth_service.dart';
@@ -138,8 +139,15 @@ class _LoginViewState extends State<LoginView> {
                       final user = AuthService.firebase().currentUser;
                       if (user != null) {
                         if (user.isEmailVerified) {
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                              mainPageRoute, (route) => false);
+                          final isseller =
+                              await CloudServices().isSeller(email: user.email);
+                          if (!isseller) {
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                                mainPageRoute, (route) => false);
+                          } else {
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                                sellerHomeRoute, (route) => false);
+                          }
                         } else {
                           Navigator.of(context).pushNamedAndRemoveUntil(
                               verifyEmailRoute, (route) => false);

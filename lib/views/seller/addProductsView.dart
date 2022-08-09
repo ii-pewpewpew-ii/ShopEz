@@ -18,7 +18,7 @@ class AddProductsFormView extends StatefulWidget {
 
 class _AddProductsFormViewState extends State<AddProductsFormView> {
   final cloud = CloudServices();
-  String get sellerId => AuthService.firebase().currentUser!.id;
+  String? get sellerId => AuthService.firebase().currentUser!.email;
   final formKey = GlobalKey<FormState>();
   late String productName;
   late int? productPrice;
@@ -106,7 +106,7 @@ class _AddProductsFormViewState extends State<AddProductsFormView> {
           border: OutlineInputBorder(),
         ),
         validator: (value) {
-          if (value!.length > 150) {
+          if (value!.length > 5000) {
             return 'Description cannot be more than 150 characters';
           } else if (value.isEmpty) {
             return 'Product must Contain a description';
@@ -122,14 +122,13 @@ class _AddProductsFormViewState extends State<AddProductsFormView> {
           border: OutlineInputBorder(),
         ),
         validator: (value) {
-          if (value!.length > 150) {
-            return 'Description cannot be more than 150 characters';
+          if (int.parse(value!) <= 0) {
+            return "We're Not Doing Charity ;)";
           } else {
             return null;
           }
         },
-        onChanged: ((value) =>
-            setState(() => productPrice = int.parse(value))),
+        onChanged: ((value) => setState(() => productPrice = int.parse(value))),
       );
   Widget buildProductImage() => TextFormField(
         decoration: const InputDecoration(

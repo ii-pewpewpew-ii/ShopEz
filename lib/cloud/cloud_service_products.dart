@@ -33,16 +33,16 @@ class CloudServices {
     return document.id;
   }
 
-  Future<bool> isSeller({required String userId}) async {
+  Future<bool> isSeller({required String? email}) async {
     final isseller = await users
-        .where(sellerUserIdFieldName, isEqualTo: userId)
+        .where(sellerUserIdFieldName, isEqualTo: email)
         .get()
         .then(((value) => value.docs.isNotEmpty));
     return isseller;
   }
 
-  Future<void> addSeller({required String userId}) async {
-    await users.add({sellerUserIdFieldName: userId});
+  Future<void> addSeller({required String email}) async {
+    await users.add({sellerUserIdFieldName: email});
   }
 
   Stream<Iterable<Product>> getProductByCategory({required String category}) =>
