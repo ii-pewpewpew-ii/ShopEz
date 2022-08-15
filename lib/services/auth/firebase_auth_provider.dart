@@ -37,6 +37,11 @@ class FirebaseAuthProvider implements AuthProvider {
         throw (UserNotFoundAuthException());
       } else if (e.code == "wrong-password") {
         throw (WrongPasswordAuthException());
+      } else if (e.code == "invalid-email") {
+        throw (InvalidEmailAuthException());
+      }
+      if (e.code == "email-already-in-use") {
+        throw (EmailAlreadyInUseAuthException());
       } else {
         throw (GenericAuthException());
       }
@@ -87,6 +92,8 @@ class FirebaseAuthProvider implements AuthProvider {
       } else {
         throw (GenericAuthException());
       }
+    } catch (_) {
+      throw GenericAuthException();
     }
   }
 

@@ -22,7 +22,8 @@ class CategorySearchView extends StatelessWidget {
             46,
             62,
           ),
-          title: Center(
+          title: Container(
+            margin: const EdgeInsets.only(left: 75),
             child: Image.asset(
               'assets/logo.png',
               width: 100,
@@ -38,109 +39,104 @@ class CategorySearchView extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final product = products.elementAt(index);
                     return Container(
-                        height: 120,
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        margin: const EdgeInsets.only(top: 5),
-                        width: MediaQuery.of(context).size.width,
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(0.2)),
-                          color: Colors.white,
-                          elevation: 20,
-                          child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: ConstrainedBox(
-                                      constraints: BoxConstraints(
-                                        maxHeight:
-                                            MediaQuery.of(context).size.height *
-                                                .25,
-                                        maxWidth:
-                                            MediaQuery.of(context).size.width *
-                                                0.25,
-                                      ),
-                                      child: ClipRRect(
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(10)),
-                                        child: Image.network(
-                                          product.productImage,
-                                          fit: BoxFit.fill,
-                                        ),
-                                      ),
-                                    )),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                .5,
-                                        child: Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              10, 10, 0, 0),
-                                          child: Text(product.productName,
-                                              style: GoogleFonts.montserrat(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 18)),
-                                        )),
-                                    SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                .5,
-                                        child: Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              10, 5, 0, 0),
-                                          child: Text(
-                                              "INR ${product.productPrice}",
-                                              style: GoogleFonts.montserrat(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 15)),
-                                        )),
-                                    SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                .5,
-                                        child: Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              10, 5, 0, 0),
-                                          child: Text(
-                                              "from ${product.sellerName}",
-                                              style: GoogleFonts.montserrat(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.bold)),
-                                        )),
-                                    SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                .5,
-                                        child: Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              10, 5, 0, 0),
-                                          child: Text(
-                                            product.productDescription,
-                                            style: GoogleFonts.ubuntu(
-                                                fontSize: 12),
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        )),
-                                  ],
+                      height: 120,
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      margin: const EdgeInsets.only(top: 5),
+                      width: MediaQuery.of(context).size.width,
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0.2)),
+                        color: Colors.white,
+                        elevation: 20,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  maxHeight:
+                                      MediaQuery.of(context).size.height * .25,
+                                  maxWidth:
+                                      MediaQuery.of(context).size.width * 0.25,
                                 ),
-                                Container(
-                                  margin: const EdgeInsets.only(left: 20),
-                                  child: IconButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pushNamed(
-                                            itemDetailsRoute,
-                                            arguments: ItemToDisplay(product));
-                                      },
-                                      icon: const Icon(Icons.arrow_forward)),
-                                )
-                              ]),
-                        ));
+                                child: ClipRRect(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
+                                  child: Image.network(
+                                    product.productImage,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width * .5,
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                                    child: Text(product.productName,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.montserrat(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18)),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width * .5,
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(10, 5, 0, 0),
+                                    child: Text("INR ${product.productPrice}",
+                                        style: GoogleFonts.montserrat(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15)),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width * .5,
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(10, 5, 0, 0),
+                                    child: Text("from ${product.sellerName}",
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width * .5,
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(10, 5, 0, 0),
+                                    child: Text(
+                                      product.productDescription,
+                                      style: GoogleFonts.ubuntu(fontSize: 12),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(left: 20),
+                              child: IconButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pushNamed(
+                                        itemDetailsRoute,
+                                        arguments: ItemToDisplay(product));
+                                  },
+                                  icon: const Icon(Icons.arrow_forward)),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
                   },
                   itemCount: products.length,
                 );

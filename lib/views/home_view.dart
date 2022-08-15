@@ -102,7 +102,8 @@ class _HomePageState extends State<MainPage> {
                 style: const TextStyle(color: Colors.black),
                 decoration: const InputDecoration(
                   hintText: 'Search Categories',
-                )),
+                ),
+              ),
         actions: [
           IconButton(
               onPressed: () {

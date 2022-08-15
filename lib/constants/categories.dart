@@ -1,1 +1,0 @@
-const categories = ['Technology', 'Grocery'];

@@ -28,7 +28,9 @@ class _SellerHomeViewState extends State<SellerHomeView> {
               return ListViewBuilder(
                 products: products,
                 onDeletePressed: (prod) async {
-                  await _cloudservice.deleteProduct(documentId: prod.productId);
+                  await _cloudservice.deleteProduct(
+                    documentId: prod.productId,
+                  );
                 },
               );
             } else {

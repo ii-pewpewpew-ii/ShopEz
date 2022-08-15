@@ -21,6 +21,7 @@ class CartView extends StatelessWidget {
 
   final _cloudServices = CloudServices();
   final email = AuthService.firebase().currentUser!.email;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,8 +36,8 @@ class CartView extends StatelessWidget {
   ->To retreive from the 2 collections 'product' and 'user_cart' 
   ->we use Nested Stream Builders
   */
-
   Widget buildCartItems(context, snapshot) {
+    int total = 0;
     switch (snapshot.connectionState) {
       case ConnectionState.active:
         if (snapshot.hasData) {
@@ -47,59 +48,93 @@ class CartView extends StatelessWidget {
               switch (snapshot.connectionState) {
                 case ConnectionState.active:
                   final products = snapshot.data as Iterable<Product>;
-
-                  return SingleChildScrollView(
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        color: Color.fromARGB(255, 255, 255, 255),
-                      ),
-                      width: MediaQuery.of(context).size.width,
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 5),
-                      height: 150,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: ((context, index) {
-                          final product = products.elementAt(index);
-                          final cartProduct = cartProducts.elementAt(index);
-                          return Container(
-                              height: 120,
-                              decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                              ),
-                              margin: const EdgeInsets.only(top: 5),
-                              width: MediaQuery.of(context).size.width,
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(0.2)),
-                                color: Colors.white,
-                                elevation: 25,
-                                child: Slidable(
-                                  endActionPane: ActionPane(
-                                    extentRatio: 0.4,
-                                    motion: const DrawerMotion(),
-                                    children: [
-                                      SlidableAction(
-                                        onPressed: (context) async {
-                                          final choice =
-                                              await showDeleteDialog(context);
-                                          if (choice) {
-                                            onDeletePressed(product);
-                                          }
-                                        },
-                                        icon: Icons.delete,
-                                        backgroundColor: Colors.red,
-                                      ),
-                                    ],
+                  return Stack(
+                    children: [
+                      SingleChildScrollView(
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                            color: Color.fromARGB(255, 255, 255, 255),
+                          ),
+                          width: MediaQuery.of(context).size.width,
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
+                          height: MediaQuery.of(context).size.height,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            itemBuilder: ((context, index) {
+                              //print(total);
+                              if (index == products.length) {
+                                return Container(
+                                  margin: const  EdgeInsets.fromLTRB(5, 10, 5, 10),
+                                  width: MediaQuery.of(context).size.width - 50,
+                                  height: 50,
+                                  //color: Colors.amber,
+                                  decoration: const BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                    gradient: LinearGradient(
+                                        colors: [
+                                          Color.fromARGB(255, 255, 219, 121),
+                                          Color.fromARGB(255, 255, 203, 32)
+                                        ],
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter),
                                   ),
-                                  child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+
+                                  child: TextButton(
+                                    onPressed: () {},
+                                    child: Text('Checkout Total : $total'),
+                                  ),
+                                );
+                              } else {
+                                final product = products.elementAt(index);
+                                final cartProduct =
+                                    cartProducts.elementAt(index);
+                                total +=
+                                    product.productPrice * cartProduct.count;
+                                return Card(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(0.2),
+                                  ),
+                                  color: Colors.white,
+                                  elevation: 25,
+                                  child: Slidable(
+                                    endActionPane: ActionPane(
+                                      extentRatio: 0.4,
+                                      motion: const DrawerMotion(),
                                       children: [
-                                        Padding(
+                                        SlidableAction(
+                                          onPressed: (context) async {
+                                            final choice =
+                                                await showDeleteDialog(context);
+                                            if (choice) {
+                                              onDeletePressed(product);
+                                            }
+                                          },
+                                          icon: Icons.delete,
+                                          backgroundColor: Colors.red,
+                                        ),
+                                      ],
+                                    ),
+                                    child: Container(
+                                      height: 150,
+                                      decoration: const BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(10),
+                                        ),
+                                      ),
+                                      width: MediaQuery.of(context).size.width,
+                                      margin: const EdgeInsets.only(top: 5),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Padding(
                                             padding: const EdgeInsets.all(2.0),
                                             child: ConstrainedBox(
                                               constraints: BoxConstraints(
@@ -116,18 +151,20 @@ class CartView extends StatelessWidget {
                                               child: ClipRRect(
                                                 borderRadius:
                                                     const BorderRadius.all(
-                                                        Radius.circular(10)),
+                                                  Radius.circular(10),
+                                                ),
                                                 child: Image.network(
                                                   product.productImage,
                                                   fit: BoxFit.fill,
                                                 ),
                                               ),
-                                            )),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            SizedBox(
+                                            ),
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              SizedBox(
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width *
@@ -144,8 +181,9 @@ class CartView extends StatelessWidget {
                                                                   FontWeight
                                                                       .bold,
                                                               fontSize: 18)),
-                                                )),
-                                            SizedBox(
+                                                ),
+                                              ),
+                                              SizedBox(
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width *
@@ -162,8 +200,9 @@ class CartView extends StatelessWidget {
                                                                   FontWeight
                                                                       .bold,
                                                               fontSize: 15)),
-                                                )),
-                                            SizedBox(
+                                                ),
+                                              ),
+                                              SizedBox(
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width *
@@ -173,15 +212,17 @@ class CartView extends StatelessWidget {
                                                       const EdgeInsets.fromLTRB(
                                                           10, 5, 0, 0),
                                                   child: Text(
-                                                      "from ${product.sellerName}",
-                                                      style: GoogleFonts
-                                                          .montserrat(
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold)),
-                                                )),
-                                            SizedBox(
+                                                    "from ${product.sellerName}",
+                                                    style:
+                                                        GoogleFonts.montserrat(
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width *
@@ -193,10 +234,13 @@ class CartView extends StatelessWidget {
                                                   child: Text(
                                                       product
                                                           .productDescription,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
                                                       style: GoogleFonts.ubuntu(
                                                           fontSize: 12)),
-                                                )),
-                                            SizedBox(
+                                                ),
+                                              ),
+                                              SizedBox(
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width *
@@ -206,32 +250,40 @@ class CartView extends StatelessWidget {
                                                       const EdgeInsets.fromLTRB(
                                                           10, 5, 0, 0),
                                                   child: Text(
-                                                      "${cartProduct.count}",
+                                                      "Quantity : ${cartProduct.count}",
                                                       style: GoogleFonts.ubuntu(
                                                           fontSize: 12)),
-                                                )),
-                                          ],
-                                        ),
-                                        Container(
-                                          margin:
-                                              const EdgeInsets.only(left: 20),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pushNamed(
-                                                    itemDetailsRoute,
-                                                    arguments:
-                                                        ItemToDisplay(product));
-                                              },
-                                              icon: const Icon(
-                                                  Icons.arrow_forward)),
-                                        )
-                                      ]),
-                                ),
-                              ));
-                        }),
-                        itemCount: products.length,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Container(
+                                            margin:
+                                                const EdgeInsets.only(left: 10),
+                                            child: IconButton(
+                                                onPressed: () {
+                                                  Navigator.of(context)
+                                                      .pushNamed(
+                                                          itemDetailsRoute,
+                                                          arguments:
+                                                              ItemToDisplay(
+                                                                  product));
+                                                },
+                                                icon: const Icon(
+                                                    Icons.arrow_forward)),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
+                            }),
+                            itemCount: products.length + 1,
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   );
                 default:
                   return const CircularProgressIndicator();

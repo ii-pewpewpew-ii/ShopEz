@@ -1,9 +1,10 @@
 import 'package:amazone_clone/cloud/constants.dart';
+import 'package:amazone_clone/constants/routes.dart';
+import 'package:amazone_clone/views/category_search.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../cloud/cloud_service_products.dart';
 import '../utilities/buildhome.dart';
-
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -26,10 +27,14 @@ class _HomePageState extends State<HomePage> {
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
-              height: 340,
+              height: 320,
               child: Column(
                 children: [
                   ListTile(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(searchPageRoute,
+                          arguments: GetCategory(categories.elementAt(index)));
+                    },
                     leading: Text(
                       categories.elementAt(index),
                       style: GoogleFonts.poppins(
