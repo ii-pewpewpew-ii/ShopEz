@@ -21,7 +21,7 @@ class CloudServices {
       required sellerName,
       required productImage,
       required sellerId}) async {
-      final document = await products.add({
+    final document = await products.add({
       productNameFieldName: productName,
       productDescriptionFieldName: productDescription,
       productPriceFieldName: productPrice,
@@ -78,15 +78,39 @@ class CloudServices {
   }
 
   Future<void> addProductToCart(
-      {required emailId, required productId, required count}) async {
-    final cartProduct =
-        FirebaseFirestore.instance.collection(emailId).doc(productId);
-    final information = await cartProduct.get();
+      {required uId, required productId, required count}) async {
+    final cart =
+        FirebaseFirestore.instance.collection(cartCollectionName).doc(uId);
+    final information = await cart.get();
     if (information.exists) {
-      final existingCount = information.get(countFieldName);
-      cartProduct.update({countFieldName: existingCount + count});
+      int flag = 0;
+      late var products = information.get(productsFieldName);
+      late var newProduct = [];
+      print(products);
+      for (dynamic product in products) {
+        if (product[productIdFieldName] == productId) {
+          newProduct.add({
+            quantityFieldName: product[quantityFieldName] + count,
+            productIdFieldName: productId
+          });
+          flag = 1;
+        } else {
+          newProduct.add(product);
+        }
+      }
+      if (flag == 1) {
+        await cart.update({productsFieldName: newProduct});
+      }
+      if (flag == 0) {
+        //print(newProduct);
+        products.add({productIdFieldName: productId, quantityFieldName: count});
+        await cart.update({productsFieldName: products});
+      }
     } else {
-      cartProduct.set({countFieldName: count});
+      var products = [
+        {productIdFieldName: productId, quantityFieldName: count}
+      ];
+      cart.set({productsFieldName: products});
     }
   }
 
@@ -95,10 +119,26 @@ class CloudServices {
     sellerOrders.doc(orderId).delete();
   }
 
-  Future<void> removeProductFromCart(
-      {required productId, required emailId}) async {
-    final cart = FirebaseFirestore.instance.collection(emailId);
-    cart.doc(productId).delete();
+  Future<void> removeProductFromCart({required productId, required uId}) async {
+    final cart =
+        FirebaseFirestore.instance.collection(cartCollectionName).doc(uId);
+    final information = await cart.get();
+    final cartItems = information.get(productsFieldName);
+    late final productToRemove;
+    for (dynamic items in cartItems) {
+      if (items[productIdFieldName] == productId) {
+        {
+          productToRemove = {
+            quantityFieldName: items[quantityFieldName],
+            productIdFieldName: productId,
+          };
+        }
+        break;
+      }
+    }
+    cartItems.removeWhere((product) =>
+        product[productIdFieldName] == productToRemove[productIdFieldName]);
+    await cart.update({productsFieldName: cartItems});
   }
 
   Future<void> addOrderToSellerDash(
@@ -128,11 +168,13 @@ class CloudServices {
         .where((element) => productIds.contains(element.productId)));
   }
 
-  Stream<Iterable<CartItem>> getCartProductIds({required email}) {
-    final cart = FirebaseFirestore.instance.collection(email);
-    return cart
-        .snapshots()
-        .map((event) => event.docs.map((doc) => CartItem.fromdoc(doc)));
+  Stream<DocumentSnapshot<Map<String, dynamic>>> getCartProductIds(
+      {required uId}) {
+    final cart = FirebaseFirestore.instance
+        .collection(cartCollectionName)
+        .doc(uId)
+        .snapshots();
+    return cart;
   }
 
   Stream<Iterable<Product>> getProductByCategory({required String category}) =>

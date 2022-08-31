@@ -7,7 +7,7 @@ class CartItem {
 
   CartItem(this.productId, this.count);
 
-  CartItem.fromdoc(QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
-      : productId = snapshot.id,
-        count = snapshot.data()[countFieldName] as int;
+  CartItem.fromMap(Map<String, dynamic> product)
+      : productId = product[productIdFieldName],
+        count = product[quantityFieldName];
 }

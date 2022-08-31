@@ -16,7 +16,7 @@ class _ItemDetailsState extends State<ItemDetails> {
   int count = 1;
   @override
   Widget build(BuildContext context) {
-    final userEmail = AuthService.firebase().currentUser!.email;
+    final userEmail = AuthService.firebase().currentUser!.id;
     final cloudService = CloudServices();
     final displayProduct =
         ModalRoute.of(context)!.settings.arguments as ItemToDisplay;
@@ -150,7 +150,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                             await cloudService.addProductToCart(
                               productId: displayProduct.details.productId,
                               count: count,
-                              emailId: userEmail,
+                              uId: userEmail,
                             );
                             showSnackBox(
                                 context: context,

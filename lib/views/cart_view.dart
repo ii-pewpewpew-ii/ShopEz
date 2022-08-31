@@ -1,3 +1,4 @@
+import 'package:amazone_clone/cloud/constants.dart';
 import 'package:amazone_clone/constants/routes.dart';
 import 'package:amazone_clone/services/auth/auth_service.dart';
 import 'package:amazone_clone/views/extended_items_view.dart';
@@ -19,13 +20,14 @@ class CartView extends StatelessWidget {
   final CallBack onDeletePressed;
 
   final _cloudServices = CloudServices();
+  final uId = AuthService.firebase().currentUser!.id;
   final email = AuthService.firebase().currentUser!.email;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder(
-          stream: _cloudServices.getCartProductIds(email: email),
+          stream: _cloudServices.getCartProductIds(uId: uId),
           builder: buildCartItems),
     );
   }
@@ -40,7 +42,9 @@ class CartView extends StatelessWidget {
     switch (snapshot.connectionState) {
       case ConnectionState.active:
         if (snapshot.hasData) {
-          final cartProducts = snapshot.data as Iterable<CartItem>;
+          final data = snapshot.data;
+          final products = data[productsFieldName] as List<dynamic>;
+          final cartProducts = products.map((e) => CartItem.fromMap(e));
           final productIds = cartProducts.map((cartItem) => cartItem.productId);
           return StreamBuilder(
             builder: (context, snapshot) {
@@ -65,14 +69,12 @@ class CartView extends StatelessWidget {
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
                             itemBuilder: ((context, index) {
-                              //print(total);
                               if (index == products.length) {
                                 return Container(
                                   margin:
                                       const EdgeInsets.fromLTRB(5, 10, 5, 10),
                                   width: MediaQuery.of(context).size.width - 50,
                                   height: 50,
-                                  //color: Colors.amber,
                                   decoration: const BoxDecoration(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10)),
@@ -84,7 +86,6 @@ class CartView extends StatelessWidget {
                                         begin: Alignment.topCenter,
                                         end: Alignment.bottomCenter),
                                   ),
-
                                   child: TextButton(
                                     onPressed: () async {
                                       for (int i = 0;
@@ -102,7 +103,7 @@ class CartView extends StatelessWidget {
                                         await _cloudServices
                                             .removeProductFromCart(
                                           productId: product.productId,
-                                          emailId: email,
+                                          uId: uId,
                                         );
                                       }
                                     },
@@ -314,6 +315,9 @@ class CartView extends StatelessWidget {
           return const CircularProgressIndicator();
         }
       default:
+        if (snapshot.hasError) {
+          print(snapshot.error);
+        }
         return const CircularProgressIndicator();
     }
   }

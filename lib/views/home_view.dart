@@ -20,7 +20,7 @@ class MainPage extends StatefulWidget {
 
 class _HomePageState extends State<MainPage> {
   late final _cloudService = CloudServices();
-  final email = AuthService.firebase().currentUser!.email;
+  final uId = AuthService.firebase().currentUser!.id;
   bool issearch = false;
   late ScrollController vertical, horizontal;
   @override
@@ -35,14 +35,14 @@ class _HomePageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    final _category = TextEditingController();
+    final category = TextEditingController();
     final screens = [
       const HomePage(),
       CartView(
         onDeletePressed: (prod) async {
           await _cloudService.removeProductFromCart(
             productId: prod.productId,
-            emailId: email,
+            uId: uId,
           );
         },
       )
@@ -85,7 +85,7 @@ class _HomePageState extends State<MainPage> {
             : IconButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(searchPageRoute,
-                      arguments: GetCategory(_category.text));
+                      arguments: GetCategory(category.text));
                 },
                 icon: const Icon(Icons.search),
                 color: Colors.black,
@@ -98,7 +98,7 @@ class _HomePageState extends State<MainPage> {
                 ),
               )
             : TextField(
-                controller: _category,
+                controller: category,
                 style: const TextStyle(color: Colors.black),
                 decoration: const InputDecoration(
                   hintText: 'Search Categories',
