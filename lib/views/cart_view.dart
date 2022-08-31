@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:amazone_clone/cloud/cloud_service_products.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../cloud/cart_Item.dart';
+import '../cloud/cart_item.dart';
 import '../cloud/product.dart';
 import '../utilities/show_delete_product.dart';
 
@@ -69,7 +68,8 @@ class CartView extends StatelessWidget {
                               //print(total);
                               if (index == products.length) {
                                 return Container(
-                                  margin: const  EdgeInsets.fromLTRB(5, 10, 5, 10),
+                                  margin:
+                                      const EdgeInsets.fromLTRB(5, 10, 5, 10),
                                   width: MediaQuery.of(context).size.width - 50,
                                   height: 50,
                                   //color: Colors.amber,
@@ -86,7 +86,26 @@ class CartView extends StatelessWidget {
                                   ),
 
                                   child: TextButton(
-                                    onPressed: () {},
+                                    onPressed: () async {
+                                      for (int i = 0;
+                                          i < products.length;
+                                          i++) {
+                                        CartItem cartProduct =
+                                            cartProducts.elementAt(i);
+                                        Product product = products.elementAt(i);
+                                        await _cloudServices
+                                            .addOrderToSellerDash(
+                                                email: email,
+                                                sellerId: product.sellerId,
+                                                productId: product.productId,
+                                                count: cartProduct.count);
+                                        await _cloudServices
+                                            .removeProductFromCart(
+                                          productId: product.productId,
+                                          emailId: email,
+                                        );
+                                      }
+                                    },
                                     child: Text('Checkout Total : $total'),
                                   ),
                                 );

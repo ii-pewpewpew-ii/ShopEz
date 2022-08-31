@@ -1,5 +1,6 @@
-import 'package:amazone_clone/cloud/cart_Item.dart';
+import 'package:amazone_clone/cloud/cart_item.dart';
 import 'package:amazone_clone/cloud/cloud_exceptions.dart';
+import 'package:amazone_clone/cloud/order_Details.dart';
 import 'package:amazone_clone/cloud/product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'constants.dart';
@@ -20,7 +21,7 @@ class CloudServices {
       required sellerName,
       required productImage,
       required sellerId}) async {
-    final document = await products.add({
+      final document = await products.add({
       productNameFieldName: productName,
       productDescriptionFieldName: productDescription,
       productPriceFieldName: productPrice,
@@ -43,16 +44,6 @@ class CloudServices {
   Future<void> addSeller({required String email}) async {
     await users.add({sellerUserIdFieldName: email});
   }
-
-  Stream<Iterable<Product>> getProductByCategory({required String category}) =>
-      products.snapshots().map((event) => event.docs
-          .map((doc) => Product.fromSnapshot(doc))
-          .where((element) => element.category == category));
-
-  Stream<Iterable<Product>> getProductBySellerId({required sellerId}) =>
-      products.snapshots().map((event) => event.docs
-          .map((doc) => Product.fromSnapshot(doc))
-          .where((element) => element.sellerId == sellerId));
 
   Future<void> updateProduct(
       {required documentId,
@@ -97,13 +88,37 @@ class CloudServices {
     } else {
       cartProduct.set({countFieldName: count});
     }
-    //cart.doc(productId).set(data);
+  }
+
+  Future<void> fullfillOrder({required String orderId, required email}) async {
+    final sellerOrders = FirebaseFirestore.instance.collection(email);
+    sellerOrders.doc(orderId).delete();
   }
 
   Future<void> removeProductFromCart(
       {required productId, required emailId}) async {
     final cart = FirebaseFirestore.instance.collection(emailId);
     cart.doc(productId).delete();
+  }
+
+  Future<void> addOrderToSellerDash(
+      {required sellerId,
+      required productId,
+      required count,
+      required email}) async {
+    final sellerOrders = FirebaseFirestore.instance.collection(sellerId);
+    await sellerOrders.add({
+      countFieldName: count,
+      productIdFieldName: productId,
+      customerFieldName: email,
+    });
+  }
+
+  Stream<Iterable<OrderDetails>> getOrders({required sellerId}) {
+    final sellerOrders = FirebaseFirestore.instance.collection(sellerId);
+    return sellerOrders.snapshots().map(((event) => event.docs
+        .map((doc) => OrderDetails.fromDoc(doc))
+        .where((element) => element == element)));
   }
 
   Stream<Iterable<Product>> getCartItems(
@@ -115,8 +130,18 @@ class CloudServices {
 
   Stream<Iterable<CartItem>> getCartProductIds({required email}) {
     final cart = FirebaseFirestore.instance.collection(email);
-    return cart.snapshots().map(((event) => event.docs
-        .map((doc) => CartItem.fromdoc(doc))
-        .where((element) => element == element)));
+    return cart
+        .snapshots()
+        .map((event) => event.docs.map((doc) => CartItem.fromdoc(doc)));
   }
+
+  Stream<Iterable<Product>> getProductByCategory({required String category}) =>
+      products.snapshots().map((event) => event.docs
+          .map((doc) => Product.fromSnapshot(doc))
+          .where((element) => element.category == category));
+
+  Stream<Iterable<Product>> getProductBySellerId({required sellerId}) =>
+      products.snapshots().map((event) => event.docs
+          .map((doc) => Product.fromSnapshot(doc))
+          .where((element) => element.sellerId == sellerId));
 }

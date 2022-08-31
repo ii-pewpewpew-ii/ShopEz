@@ -10,7 +10,7 @@ Widget itemBuilder(Product product, BuildContext context) {
     height: 200,
     child: Container(
       decoration: const BoxDecoration(
-          color: Colors.white10,
+          color: Color.fromARGB(255, 171, 255, 251),
           borderRadius: BorderRadius.all(Radius.circular(10))),
       margin: const EdgeInsets.all(5),
       child: Column(
@@ -21,15 +21,15 @@ Widget itemBuilder(Product product, BuildContext context) {
             child: Container(
               margin: const EdgeInsets.all(10),
               padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                        color: Colors.grey.withOpacity(0.3),
-                        blurRadius: 15,
-                        spreadRadius: 5),
+                        color: Color.fromARGB(255, 182, 232, 255),
+                        blurRadius: 10,
+                        spreadRadius: 2),
                   ],
-                  color: const Color.fromARGB(255, 255, 255, 255),
-                  borderRadius: const BorderRadius.all(Radius.circular(10))),
+                  color: Color.fromARGB(255, 182, 232, 255),
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
                 child: Image.network(

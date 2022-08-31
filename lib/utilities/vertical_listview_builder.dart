@@ -2,7 +2,7 @@ import 'package:amazone_clone/cloud/product.dart';
 import 'package:amazone_clone/services/auth/auth_service.dart';
 import 'package:amazone_clone/utilities/show_delete_product.dart';
 import 'package:amazone_clone/utilities/show_logout_dialoge.dart';
-import 'package:amazone_clone/views/seller/updateProduct.dart';
+import 'package:amazone_clone/views/seller/update_product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';

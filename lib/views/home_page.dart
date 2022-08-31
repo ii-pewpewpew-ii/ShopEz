@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
     return Container(
         //height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        color: Colors.grey[10],
+        color: const Color.fromARGB(255, 248, 237, 140),
         child: ListView.builder(
           itemBuilder: ((context, index) {
             return Container(
@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Flexible(
                     child: Container(
-                      color: Colors.white,
+                      color: const Color.fromARGB(255, 248, 237, 140),
                       margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                       child: StreamBuilder(
                         builder: buildHome,

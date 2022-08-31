@@ -4,14 +4,14 @@ import 'package:amazone_clone/services/auth/auth_service.dart';
 import 'package:amazone_clone/utilities/vertical_listview_builder.dart';
 import 'package:flutter/material.dart';
 
-class SellerHomeView extends StatefulWidget {
-  const SellerHomeView({Key? key}) : super(key: key);
+class SellerDash extends StatefulWidget {
+  const SellerDash({Key? key}) : super(key: key);
 
   @override
-  State<SellerHomeView> createState() => _SellerHomeViewState();
+  State<SellerDash> createState() => _SellerDashState();
 }
 
-class _SellerHomeViewState extends State<SellerHomeView> {
+class _SellerDashState extends State<SellerDash> {
   String? get email => AuthService.firebase().currentUser!.email;
   final _cloudservice = CloudServices();
 

@@ -5,9 +5,9 @@ import 'package:amazone_clone/views/extended_items_view.dart';
 import 'package:amazone_clone/views/home_page.dart';
 import 'package:amazone_clone/views/home_view.dart';
 import 'package:amazone_clone/views/login_view.dart';
-import 'package:amazone_clone/views/seller/addProductsView.dart';
-import 'package:amazone_clone/views/seller/seller_dash.dart';
-import 'package:amazone_clone/views/seller/updateProduct.dart';
+import 'package:amazone_clone/views/seller/add_products_view.dart';
+import 'package:amazone_clone/views/seller/seller_home.dart';
+import 'package:amazone_clone/views/seller/update_product.dart';
 import 'package:amazone_clone/views/signup_view.dart';
 import 'package:amazone_clone/views/verify_email_view.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         updateProductRoute: ((context) => const UpdateProductsFormView()),
         itemDetailsRoute: ((context) => const ItemDetails()),
         mainPageRoute: ((context) => const MainPage()),
-        searchPageRoute: ((context) => const CategorySearchView())
+        searchPageRoute: ((context) => const CategorySearchView()),
       },
       home: Scaffold(
         body: FutureBuilder(
