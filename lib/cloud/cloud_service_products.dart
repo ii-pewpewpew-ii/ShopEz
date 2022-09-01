@@ -1,9 +1,9 @@
-import 'package:amazone_clone/cloud/cart_item.dart';
 import 'package:amazone_clone/cloud/cloud_exceptions.dart';
 import 'package:amazone_clone/cloud/order_Details.dart';
 import 'package:amazone_clone/cloud/product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'constants.dart';
+import 'package:uuid/uuid.dart';
 
 class CloudServices {
   //Singleton Creation
@@ -86,7 +86,6 @@ class CloudServices {
       int flag = 0;
       late var products = information.get(productsFieldName);
       late var newProduct = [];
-      print(products);
       for (dynamic product in products) {
         if (product[productIdFieldName] == productId) {
           newProduct.add({
@@ -102,7 +101,6 @@ class CloudServices {
         await cart.update({productsFieldName: newProduct});
       }
       if (flag == 0) {
-        //print(newProduct);
         products.add({productIdFieldName: productId, quantityFieldName: count});
         await cart.update({productsFieldName: products});
       }
@@ -114,9 +112,27 @@ class CloudServices {
     }
   }
 
-  Future<void> fullfillOrder({required String orderId, required email}) async {
-    final sellerOrders = FirebaseFirestore.instance.collection(email);
-    sellerOrders.doc(orderId).delete();
+  Future<void> fullfillOrder({required String orderId, required uId}) async {
+    final sellerOrders = await FirebaseFirestore.instance
+        .collection(sellerDashCollectionName)
+        .doc(uId);
+    final information = await sellerOrders.get();
+    final orders = information.get(ordersFieldName);
+    late final orderToRemove;
+    for (dynamic order in orders) {
+      if (order[orderIdFieldName] == orderId) {
+        orderToRemove = {
+          customerEmailFieldName: order[customerEmailFieldName],
+          orderIdFieldName: order[orderIdFieldName],
+          productIdFieldName: order[productIdFieldName],
+          quantityFieldName: order[quantityFieldName]
+        };
+        break;
+      }
+    }
+    orders.removeWhere(
+        (order) => order[orderIdFieldName] == orderToRemove[orderIdFieldName]);
+    await sellerOrders.update({ordersFieldName: orders});
   }
 
   Future<void> removeProductFromCart({required productId, required uId}) async {
@@ -146,19 +162,39 @@ class CloudServices {
       required productId,
       required count,
       required email}) async {
-    final sellerOrders = FirebaseFirestore.instance.collection(sellerId);
-    await sellerOrders.add({
-      countFieldName: count,
-      productIdFieldName: productId,
-      customerFieldName: email,
-    });
+    final sellerOrders = FirebaseFirestore.instance
+        .collection(sellerDashCollectionName)
+        .doc(sellerId);
+    final information = await sellerOrders.get();
+    if (information.exists) {
+      var orders = information.get(ordersFieldName);
+      orders.add({
+        orderIdFieldName: const Uuid().v1(),
+        quantityFieldName: count,
+        productIdFieldName: productId,
+        customerEmailFieldName: email,
+      });
+      await sellerOrders.update({ordersFieldName: orders});
+    } else {
+      sellerOrders.set({
+        ordersFieldName: [
+          {
+            orderIdFieldName: const Uuid().v1(),
+            quantityFieldName: count,
+            productIdFieldName: productId,
+            customerEmailFieldName: email,
+          }
+        ]
+      });
+    }
   }
 
-  Stream<Iterable<OrderDetails>> getOrders({required sellerId}) {
-    final sellerOrders = FirebaseFirestore.instance.collection(sellerId);
-    return sellerOrders.snapshots().map(((event) => event.docs
-        .map((doc) => OrderDetails.fromDoc(doc))
-        .where((element) => element == element)));
+  Stream<DocumentSnapshot<Map<String, dynamic>>> getOrders({required uId}) {
+    final sellerOrders = FirebaseFirestore.instance
+        .collection(sellerDashCollectionName)
+        .doc(uId)
+        .snapshots();
+    return sellerOrders;
   }
 
   Stream<Iterable<Product>> getCartItems(

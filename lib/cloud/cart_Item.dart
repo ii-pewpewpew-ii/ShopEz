@@ -1,5 +1,4 @@
 import 'package:amazone_clone/cloud/constants.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CartItem {
   final String productId;

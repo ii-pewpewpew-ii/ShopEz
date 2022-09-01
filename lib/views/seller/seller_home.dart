@@ -4,7 +4,6 @@ import 'package:amazone_clone/views/seller/orderdash.dart';
 import 'package:amazone_clone/views/seller/seller_dash.dart';
 import 'package:flutter/material.dart';
 
-
 class SellerHomeView extends StatefulWidget {
   const SellerHomeView({Key? key}) : super(key: key);
 
@@ -17,12 +16,12 @@ class _SellerHomeViewState extends State<SellerHomeView> {
 
   @override
   Widget build(BuildContext context) {
-    final email = AuthService.firebase().currentUser!.email;
-    final _cloudService = CloudServices();
+    final email = AuthService.firebase().currentUser!.id;
+    final cloudService = CloudServices();
     final screens = [
       const SellerDash(),
       OrderDash(onFullFillPressed: (orderId) {
-        _cloudService.fullfillOrder(orderId: orderId, email: email);
+        cloudService.fullfillOrder(orderId: orderId, uId: email);
       })
     ];
     return Scaffold(

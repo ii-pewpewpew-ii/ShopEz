@@ -8,10 +8,13 @@ const String productCategoryFieldName = 'category';
 const String sellerIdFieldName = 'seller_id';
 const String sellerUserIdFieldName = 'seller_user_id';
 const String countFieldName = 'count';
-const String customerFieldName = 'customerId';
 const String cartCollectionName = 'carts';
+const String sellerDashCollectionName = 'sellerdash';
 const String productsFieldName = 'products';
 const String quantityFieldName = 'quantity';
+const String orderIdFieldName = 'orderId';
+const String customerEmailFieldName = 'customerEmail';
+const String ordersFieldName = 'orders';
 const categories = [
   'Technology',
   'Grocery',

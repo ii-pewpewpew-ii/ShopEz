@@ -18,7 +18,7 @@ class AddProductsFormView extends StatefulWidget {
 
 class _AddProductsFormViewState extends State<AddProductsFormView> {
   final cloud = CloudServices();
-  String? get sellerId => AuthService.firebase().currentUser!.email;
+  String? get sellerId => AuthService.firebase().currentUser!.id;
   final formKey = GlobalKey<FormState>();
   late String productName;
   late int? productPrice;

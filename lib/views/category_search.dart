@@ -11,7 +11,7 @@ class CategorySearchView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _cloudService = CloudServices();
+    final cloudService = CloudServices();
     final searchCategory =
         ModalRoute.of(context)!.settings.arguments as GetCategory;
     return Scaffold(
@@ -148,7 +148,7 @@ class CategorySearchView extends StatelessWidget {
               return const CircularProgressIndicator();
           }
         },
-        stream: _cloudService.getProductByCategory(
+        stream: cloudService.getProductByCategory(
             category: searchCategory.category),
       ),
     );

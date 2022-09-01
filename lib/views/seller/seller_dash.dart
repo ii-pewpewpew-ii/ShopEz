@@ -12,14 +12,14 @@ class SellerDash extends StatefulWidget {
 }
 
 class _SellerDashState extends State<SellerDash> {
-  String? get email => AuthService.firebase().currentUser!.email;
+  String? get uId => AuthService.firebase().currentUser!.id;
   final _cloudservice = CloudServices();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: StreamBuilder(
-      stream: _cloudservice.getProductBySellerId(sellerId: email),
+      stream: _cloudservice.getProductBySellerId(sellerId: uId),
       builder: ((context, snapshot) {
         switch (snapshot.connectionState) {
           case (ConnectionState.active):

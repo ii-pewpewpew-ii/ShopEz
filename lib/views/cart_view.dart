@@ -315,9 +315,6 @@ class CartView extends StatelessWidget {
           return const CircularProgressIndicator();
         }
       default:
-        if (snapshot.hasError) {
-          print(snapshot.error);
-        }
         return const CircularProgressIndicator();
     }
   }
