@@ -29,4 +29,5 @@ class Product {
         productPrice = snapshot.data()[productPriceFieldName] as int,
         sellerName = snapshot.data()[sellerNameFieldName] as String,
         productImage = snapshot.data()[productImageFieldName] as String;
+ 
 }

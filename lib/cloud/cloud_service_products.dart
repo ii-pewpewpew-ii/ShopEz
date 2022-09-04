@@ -1,5 +1,4 @@
 import 'package:amazone_clone/cloud/cloud_exceptions.dart';
-import 'package:amazone_clone/cloud/order_Details.dart';
 import 'package:amazone_clone/cloud/product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'constants.dart';
@@ -112,8 +111,22 @@ class CloudServices {
     }
   }
 
+  Future<Product> getProductById({required String productId}) async {
+    final product = await products.doc(productId).get();
+    return Product(
+      productId: product.id,
+      category: product[productCategoryFieldName],
+      productName: product[productNameFieldName],
+      productPrice: product[productPriceFieldName],
+      productDescription: product[productDescriptionFieldName],
+      sellerName: product[sellerNameFieldName],
+      productImage: product[productImageFieldName],
+      sellerId: product[sellerIdFieldName],
+    );
+  }
+
   Future<void> fullfillOrder({required String orderId, required uId}) async {
-    final sellerOrders = await FirebaseFirestore.instance
+    final sellerOrders = FirebaseFirestore.instance
         .collection(sellerDashCollectionName)
         .doc(uId);
     final information = await sellerOrders.get();
@@ -168,6 +181,7 @@ class CloudServices {
     final information = await sellerOrders.get();
     if (information.exists) {
       var orders = information.get(ordersFieldName);
+
       orders.add({
         orderIdFieldName: const Uuid().v1(),
         quantityFieldName: count,
@@ -189,6 +203,12 @@ class CloudServices {
     }
   }
 
+  Future<void> checkout({required String uId}) async {
+    final cart =
+        FirebaseFirestore.instance.collection(cartCollectionName).doc(uId);
+    await cart.set({productsFieldName: []});
+  }
+
   Stream<DocumentSnapshot<Map<String, dynamic>>> getOrders({required uId}) {
     final sellerOrders = FirebaseFirestore.instance
         .collection(sellerDashCollectionName)
@@ -197,11 +217,11 @@ class CloudServices {
     return sellerOrders;
   }
 
-  Stream<Iterable<Product>> getCartItems(
-      {required Iterable<String> productIds}) {
+  Stream<List<Product>> getCartItems({required Iterable<String> productIds}) {
     return products.snapshots().map((event) => event.docs
         .map((doc) => Product.fromSnapshot(doc))
-        .where((element) => productIds.contains(element.productId)));
+        .where((element) => productIds.contains(element.productId))
+        .toList());
   }
 
   Stream<DocumentSnapshot<Map<String, dynamic>>> getCartProductIds(

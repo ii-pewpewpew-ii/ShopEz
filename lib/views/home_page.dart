@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
     return Container(
         //height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        color: const Color.fromARGB(255, 248, 237, 140),
+        color: Colors.white,
         child: ListView.builder(
           itemBuilder: ((context, index) {
             return Container(
@@ -30,20 +30,24 @@ class _HomePageState extends State<HomePage> {
               height: 320,
               child: Column(
                 children: [
-                  ListTile(
-                    onTap: () {
-                      Navigator.of(context).pushNamed(searchPageRoute,
-                          arguments: GetCategory(categories.elementAt(index)));
-                    },
-                    leading: Text(
-                      categories.elementAt(index),
-                      style: GoogleFonts.poppins(
-                          fontSize: 12, fontWeight: FontWeight.bold),
+                  Container(
+                    decoration: BoxDecoration(color: Colors.grey[50]),
+                    child: ListTile(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(searchPageRoute,
+                            arguments:
+                                GetCategory(categories.elementAt(index)));
+                      },
+                      leading: Text(
+                        categories.elementAt(index),
+                        style: GoogleFonts.roboto(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                   Flexible(
                     child: Container(
-                      color: const Color.fromARGB(255, 248, 237, 140),
+                      color: const Color.fromARGB(255, 255, 255, 255),
                       margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                       child: StreamBuilder(
                         builder: buildHome,

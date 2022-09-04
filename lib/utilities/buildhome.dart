@@ -12,7 +12,7 @@ Widget buildHome(BuildContext context, AsyncSnapshot<Object?> snapshot) {
           child: Container(
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(10)),
-              color: Color.fromARGB(255, 248, 237, 140),
+              color: Colors.white,
             ),
             width: MediaQuery.of(context).size.width,
             margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
