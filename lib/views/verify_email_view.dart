@@ -1,6 +1,5 @@
 import 'package:amazone_clone/constants/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class VerifyEmailView extends StatelessWidget {
   const VerifyEmailView({Key? key}) : super(key: key);
@@ -12,20 +11,8 @@ class VerifyEmailView extends StatelessWidget {
         backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-            backgroundColor: const Color.fromARGB(
-              255,
-              34,
-              46,
-              62,
-            ),
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: const [
-                FaIcon(FontAwesomeIcons.amazon),
-                SizedBox(width: 10),
-                Text('Amazon'),
-              ],
-            )),
+          backgroundColor: const Color.fromARGB(255, 195, 197, 189),
+        ),
         body: Column(
           children: [
             Flexible(

@@ -18,9 +18,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final cloud = CloudServices();
     return Container(
-        //height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        color: Colors.white,
+        color: const Color.fromARGB(255, 160, 185, 135),
         child: ListView.builder(
           itemBuilder: ((context, index) {
             return Container(
@@ -31,23 +30,30 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: [
                   Container(
-                    decoration: BoxDecoration(color: Colors.grey[50]),
-                    child: ListTile(
-                      onTap: () {
-                        Navigator.of(context).pushNamed(searchPageRoute,
-                            arguments:
-                                GetCategory(categories.elementAt(index)));
-                      },
-                      leading: Text(
-                        categories.elementAt(index),
-                        style: GoogleFonts.roboto(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                    decoration: const BoxDecoration(
+                        color: Color.fromARGB(255, 160, 185, 135)),
+                    child: Material(
+                      borderOnForeground: false,
+                      color: const Color.fromARGB(255, 160, 185, 135),
+                      elevation: 18,
+                      child: ListTile(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(searchPageRoute,
+                              arguments:
+                                  GetCategory(categories.elementAt(index)));
+                        },
+                        leading: Text(
+                          categories.elementAt(index),
+                          style: GoogleFonts.rubik(
+                              fontSize: 16, color: Colors.white),
+                        ),
                       ),
                     ),
                   ),
                   Flexible(
                     child: Container(
-                      color: const Color.fromARGB(255, 255, 255, 255),
+                      //color: const Color.fromARGB(255, 160, 185, 135),
+                      color: Colors.white,
                       margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                       child: StreamBuilder(
                         builder: buildHome,

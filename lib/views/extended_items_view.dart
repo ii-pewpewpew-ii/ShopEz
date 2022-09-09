@@ -4,6 +4,7 @@ import 'package:amazone_clone/utilities/error_snackbox.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:amazone_clone/cloud/cloud_service_products.dart';
+import 'package:intl/intl.dart';
 
 class ItemDetails extends StatefulWidget {
   const ItemDetails({Key? key}) : super(key: key);
@@ -13,6 +14,10 @@ class ItemDetails extends StatefulWidget {
 }
 
 class _ItemDetailsState extends State<ItemDetails> {
+  final formatCurrency = NumberFormat.compactSimpleCurrency(
+    name: "INR",
+    decimalDigits: 3, // change it to get decimal places
+  );
   int count = 1;
   @override
   Widget build(BuildContext context) {
@@ -28,12 +33,7 @@ class _ItemDetailsState extends State<ItemDetails> {
           },
           icon: const Icon(Icons.arrow_back),
         ),
-        backgroundColor: const Color.fromARGB(
-          255,
-          34,
-          46,
-          62,
-        ),
+        backgroundColor: const Color.fromARGB(255, 195, 197, 189),
         title: Container(
           margin: const EdgeInsets.only(left: 80),
           child: Image.asset(
@@ -59,7 +59,7 @@ class _ItemDetailsState extends State<ItemDetails> {
               height: MediaQuery.of(context).size.height * 0.5,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: const Color.fromARGB(255, 160, 185, 135),
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(30),
                       topRight: Radius.circular(30)),
@@ -79,17 +79,23 @@ class _ItemDetailsState extends State<ItemDetails> {
                           const EdgeInsets.only(top: 20, left: 20, right: 20),
                       child: Text(
                         displayProduct.details.productName,
-                        style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.bold, fontSize: 35),
+                        style: GoogleFonts.rubik(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 35),
                       ),
                     ),
                     Padding(
                       padding:
                           const EdgeInsets.only(top: 5, left: 20, right: 20),
                       child: Text(
-                        "${displayProduct.details.productPrice}",
-                        style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.bold, fontSize: 28),
+                        formatCurrency
+                            .format(displayProduct.details.productPrice),
+                        style: GoogleFonts.rubik(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 28,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                     Padding(
@@ -97,20 +103,24 @@ class _ItemDetailsState extends State<ItemDetails> {
                           const EdgeInsets.only(top: 5, left: 20, right: 20),
                       child: Text(
                         displayProduct.details.sellerName,
-                        style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.bold, fontSize: 24),
+                        style: GoogleFonts.rubik(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24),
                       ),
                     ),
                     Padding(
                       padding:
-                          const EdgeInsets.only(top: 5, left: 10, right: 20),
+                          const EdgeInsets.only(top: 5, left: 20, right: 20),
                       child: Text(
                         displayProduct.details.productDescription,
-                        style: GoogleFonts.poppins(fontSize: 22),
+                        style: GoogleFonts.rubik(
+                            color: Colors.white, fontSize: 16),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.zero,
+                      padding:
+                          const EdgeInsets.only(top: 5, left: 5, right: 20),
                       child: Row(
                         children: [
                           IconButton(
@@ -123,29 +133,38 @@ class _ItemDetailsState extends State<ItemDetails> {
                                   }
                                 });
                               },
-                              icon: const Icon(Icons.remove)),
-                          Text('$count'),
+                              icon: const Icon(
+                                Icons.remove,
+                                color: Colors.white,
+                              )),
+                          Text('$count',
+                              style: GoogleFonts.rubik(
+                                  color: Colors.white, fontSize: 16)),
                           IconButton(
                               onPressed: () {
                                 setState(() {
                                   count += 1;
                                 });
                               },
-                              icon: const Icon(Icons.add))
+                              icon: const Icon(
+                                Icons.add,
+                                color: Colors.white,
+                              ))
                         ],
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
-                          top: 50, left: 100, right: 20, bottom: 50),
-                      child: SizedBox(
+                          top: 10, left: 100, right: 20, bottom: 50),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                            gradient: LinearGradient(colors: [
+                          Color.fromARGB(255, 189, 208, 190),
+                          Color.fromARGB(255, 198, 228, 167)
+                        ])),
                         width: 180,
                         height: 50,
                         child: TextButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: const StadiumBorder(),
-                            primary: Colors.amber,
-                          ),
                           onPressed: () async {
                             await cloudService.addProductToCart(
                               productId: displayProduct.details.productId,
@@ -158,7 +177,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                           },
                           child: Text(
                             "Add To Cart",
-                            style: GoogleFonts.poppins(color: Colors.black),
+                            style: GoogleFonts.rubik(color: Colors.black),
                           ),
                         ),
                       ),

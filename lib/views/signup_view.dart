@@ -43,9 +43,9 @@ class _SignupViewState extends State<SignupView> {
       appBar: AppBar(
           backgroundColor: const Color.fromARGB(
             255,
-            34,
-            46,
-            62,
+            195,
+            197,
+            189,
           ),
           title: Center(
             child: Image.asset(
@@ -60,7 +60,7 @@ class _SignupViewState extends State<SignupView> {
           height: 420,
           width: MediaQuery.of(context).size.width - 40,
           decoration: BoxDecoration(
-              color: Colors.white,
+              color: const Color.fromARGB(255, 160, 185, 135),
               borderRadius: BorderRadius.circular(5),
               boxShadow: [
                 BoxShadow(
@@ -75,8 +75,8 @@ class _SignupViewState extends State<SignupView> {
                 children: [
                   Text(
                     "Sign-Up",
-                    style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.bold,
+                    style: GoogleFonts.rubik(
+                        //fontWeight: FontWeight.bold,
                         textStyle: Theme.of(context).textTheme.headline4,
                         fontSize: 25,
                         color: Colors.black),
@@ -147,8 +147,8 @@ class _SignupViewState extends State<SignupView> {
                 //color: Colors.amber,
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(colors: [
-                    Color.fromARGB(255, 232, 215, 168),
-                    Color.fromARGB(255, 243, 208, 120)
+                    Color.fromARGB(255, 189, 208, 190),
+                    Color.fromARGB(255, 198, 228, 167)
                   ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
                 ),
                 child: TextButton(

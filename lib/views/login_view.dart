@@ -42,9 +42,9 @@ class _LoginViewState extends State<LoginView> {
       appBar: AppBar(
           backgroundColor: const Color.fromARGB(
             255,
-            34,
-            46,
-            62,
+            195,
+            197,
+            189,
           ),
           title: Center(
             child: Image.asset(
@@ -59,7 +59,7 @@ class _LoginViewState extends State<LoginView> {
           height: 320,
           width: MediaQuery.of(context).size.width - 40,
           decoration: BoxDecoration(
-              color: Colors.white,
+              color: const Color.fromARGB(255, 160, 185, 135),
               borderRadius: BorderRadius.circular(5),
               boxShadow: [
                 BoxShadow(
@@ -74,11 +74,11 @@ class _LoginViewState extends State<LoginView> {
                 children: [
                   Text(
                     "Sign-In",
-                    style: GoogleFonts.poppins(
-                        textStyle: Theme.of(context).textTheme.headline4,
-                        fontSize: 25,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
+                    style: GoogleFonts.rubik(
+                      textStyle: Theme.of(context).textTheme.headline4,
+                      fontSize: 25,
+                      color: Colors.black,
+                    ),
                   )
                 ],
               ),
@@ -123,8 +123,8 @@ class _LoginViewState extends State<LoginView> {
                 width: MediaQuery.of(context).size.width - 40,
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(colors: [
-                    Color.fromARGB(255, 232, 215, 168),
-                    Color.fromARGB(255, 243, 208, 120)
+                    Color.fromARGB(255, 189, 208, 190),
+                    Color.fromARGB(255, 198, 228, 167)
                   ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
                 ),
                 child: TextButton(
@@ -196,7 +196,7 @@ class _LoginViewState extends State<LoginView> {
               ),
             ),
             Text(
-              'New to Amazon?',
+              'New to ShopEz?',
               style: TextStyle(
                 color: Colors.grey,
               ),

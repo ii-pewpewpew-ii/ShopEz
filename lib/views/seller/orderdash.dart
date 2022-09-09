@@ -7,6 +7,7 @@ import 'package:amazone_clone/utilities/show_ship_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import '../../cloud/product.dart';
 import '../../constants/routes.dart';
 import '../extended_items_view.dart';
@@ -25,9 +26,9 @@ class OrderDash extends StatelessWidget {
       appBar: AppBar(
           backgroundColor: const Color.fromARGB(
             255,
-            34,
-            46,
-            62,
+            195,
+            197,
+            189,
           ),
           title: Center(
             child: Image.asset(
@@ -43,6 +44,10 @@ class OrderDash extends StatelessWidget {
   }
 
   Widget buildorderdash(context, snapshot) {
+    final formatCurrency = NumberFormat.compactSimpleCurrency(
+      name: "INR",
+      decimalDigits: 0, // change it to get decimal places
+    );
     switch (snapshot.connectionState) {
       case ConnectionState.active:
         if (snapshot.hasData) {
@@ -174,7 +179,9 @@ class OrderDash extends StatelessWidget {
                                                       const EdgeInsets.fromLTRB(
                                                           10, 5, 0, 0),
                                                   child: Text(
-                                                      "INR ${product.productPrice * order.count} ",
+                                                      formatCurrency.format(
+                                                          product.productPrice *
+                                                              order.count),
                                                       style: GoogleFonts
                                                           .montserrat(
                                                               fontWeight:

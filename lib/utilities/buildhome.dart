@@ -11,11 +11,12 @@ Widget buildHome(BuildContext context, AsyncSnapshot<Object?> snapshot) {
         return SingleChildScrollView(
           child: Container(
             decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              color: Colors.white,
-            ),
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                color: Colors.white
+                //color: Color.fromARGB(255, 160, 185, 135),
+                ),
             width: MediaQuery.of(context).size.width,
-            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            margin: const EdgeInsets.all(5),
             height: 242,
             child: ListView.builder(
               shrinkWrap: true,

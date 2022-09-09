@@ -14,62 +14,60 @@ Widget itemBuilder(Product product, BuildContext context) {
     width: 140,
     height: 200,
     child: GestureDetector(
-      child: Container(
-        decoration: const BoxDecoration(
+      child: Material(
+        elevation: 18,
+        child: Container(
+          decoration: const BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(10))),
-        margin: const EdgeInsets.all(5),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AspectRatio(
-              aspectRatio: 1.02,
-              child: Container(
-                margin: const EdgeInsets.all(10),
-                padding: const EdgeInsets.all(5),
-                decoration: const BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                          color: Color.fromARGB(255, 182, 232, 255),
-                          blurRadius: 10,
-                          spreadRadius: 2),
-                    ],
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  child: Image.network(
-                    product.productImage,
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+          ),
+          margin: const EdgeInsets.all(10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AspectRatio(
+                aspectRatio: 1.02,
+                child: Container(
+                  margin: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(5),
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    child: Image.network(
+                      product.productImage,
+                    ),
                   ),
                 ),
               ),
-            ),
-            Container(
-              margin: const EdgeInsets.fromLTRB(12, 5, 0, 5),
-              child: Text(
-                overflow: TextOverflow.ellipsis,
-                product.productName,
-                style: GoogleFonts.roboto(
-                    fontSize: 12, fontWeight: FontWeight.bold),
+              Container(
+                margin: const EdgeInsets.fromLTRB(12, 5, 0, 5),
+                child: Text(
+                  overflow: TextOverflow.ellipsis,
+                  product.productName,
+                  style: GoogleFonts.rubik(
+                      fontSize: 12, fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            Container(
-              margin: const EdgeInsets.fromLTRB(12, 5, 0, 5),
-              child: Text(
-                formatCurrency.format(product.productPrice),
-                style: GoogleFonts.roboto(
-                    fontSize: 12, fontWeight: FontWeight.bold),
+              Container(
+                margin: const EdgeInsets.fromLTRB(12, 5, 0, 5),
+                child: Text(
+                  formatCurrency.format(product.productPrice),
+                  style: GoogleFonts.rubik(
+                      fontSize: 12, fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            Container(
-              margin: const EdgeInsets.fromLTRB(12, 5, 0, 5),
-              child: Text(
-                (product.sellerName),
-                style: GoogleFonts.roboto(
-                    fontSize: 12, fontWeight: FontWeight.bold),
+              Container(
+                margin: const EdgeInsets.fromLTRB(12, 5, 0, 5),
+                child: Text(
+                  (product.sellerName),
+                  style: GoogleFonts.rubik(
+                      fontSize: 12, fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       onTap: () => Navigator.of(context)

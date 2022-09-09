@@ -54,9 +54,9 @@ class _HomePageState extends State<MainPage> {
         backgroundColor: !issearch
             ? const Color.fromARGB(
                 255,
-                34,
-                46,
-                62,
+                195,
+                197,
+                189,
               )
             : Colors.white,
         leading: !issearch

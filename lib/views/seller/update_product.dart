@@ -2,7 +2,6 @@ import 'package:amazone_clone/cloud/cloud_service_products.dart';
 import 'package:amazone_clone/cloud/constants.dart';
 import 'package:amazone_clone/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../cloud/product.dart';
@@ -35,27 +34,20 @@ class _UpdateProductsFormViewState extends State<UpdateProductsFormView> {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(
           255,
-          34,
-          46,
-          62,
+          195,
+          197,
+          189,
         ),
         title: Center(
           child: Row(
             children: [
-              const FaIcon(
-                FontAwesomeIcons.amazon,
-                color: Colors.orange,
-              ),
-              const SizedBox(
-                width: 12,
-              ),
               Text(
                 'Update Your Product',
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.rubik(
                     fontWeight: FontWeight.bold,
                     textStyle: Theme.of(context).textTheme.headline4,
                     fontSize: 15,
-                    color: Colors.white),
+                    color: Colors.black),
               )
             ],
           ),

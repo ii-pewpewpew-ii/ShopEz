@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:amazone_clone/cloud/cloud_service_products.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import '../cloud/cart_item.dart';
 import '../cloud/product.dart';
 import '../utilities/show_delete_product.dart';
@@ -31,6 +32,10 @@ class CartView extends StatelessWidget {
   }
 
   Widget buildCartItems(context, snapshot) {
+    final formatCurrency = NumberFormat.compactSimpleCurrency(
+      name: "INR",
+      decimalDigits: 3,
+    );
     num total = 0;
     switch (snapshot.connectionState) {
       case ConnectionState.active:
@@ -64,8 +69,8 @@ class CartView extends StatelessWidget {
                             borderRadius: BorderRadius.all(Radius.circular(10)),
                             gradient: LinearGradient(
                                 colors: [
-                                  Color.fromARGB(255, 255, 219, 121),
-                                  Color.fromARGB(255, 255, 203, 32)
+                                  Color.fromARGB(255, 189, 208, 190),
+                                  Color.fromARGB(255, 198, 228, 167)
                                 ],
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter),
@@ -85,159 +90,164 @@ class CartView extends StatelessWidget {
                               }
                               await _cloudServices.checkout(uId: uId);
                             },
-                            child: Text('Checkout Total : $total'),
+                            child: Text(
+                                'Checkout Total : ' +
+                                    formatCurrency.format(total),
+                                style: GoogleFonts.rubik(color: Colors.white)),
                           ),
                         );
                       } else {
                         final cartProduct = cartProducts.elementAt(index);
                         final product = productDetails[cartProduct.productId];
                         total += product.productPrice * cartProduct.count;
-                        return Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(0.2),
-                          ),
-                          color: Colors.white,
-                          elevation: 25,
-                          child: Slidable(
-                            endActionPane: ActionPane(
-                              extentRatio: 0.4,
-                              motion: const DrawerMotion(),
-                              children: [
-                                SlidableAction(
-                                  onPressed: (context) async {
-                                    final choice =
-                                        await showDeleteDialog(context);
-                                    if (choice) {
-                                      onDeletePressed(product);
-                                    }
-                                  },
-                                  icon: Icons.delete,
-                                  backgroundColor: Colors.red,
-                                ),
-                              ],
+                        return GestureDetector(
+                          onTap: () => Navigator.of(context).pushNamed(
+                              itemDetailsRoute,
+                              arguments: ItemToDisplay(product)),
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(0.2),
                             ),
-                            child: Container(
-                              height: 150,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
-                              ),
-                              width: MediaQuery.of(context).size.width,
-                              margin: const EdgeInsets.only(top: 5),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
+                            color: Colors.white,
+                            elevation: 25,
+                            child: Slidable(
+                              endActionPane: ActionPane(
+                                extentRatio: 0.4,
+                                motion: const DrawerMotion(),
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: ConstrainedBox(
-                                      constraints: BoxConstraints(
-                                        maxHeight:
-                                            MediaQuery.of(context).size.height *
-                                                .25,
-                                        maxWidth:
-                                            MediaQuery.of(context).size.width *
-                                                0.25,
-                                      ),
-                                      child: ClipRRect(
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(10),
-                                        ),
-                                        child: Image.network(
-                                          product.productImage,
-                                          fit: BoxFit.fill,
-                                        ),
-                                      ),
-                                    ),
+                                  SlidableAction(
+                                    onPressed: (context) async {
+                                      final choice =
+                                          await showDeleteDialog(context);
+                                      if (choice) {
+                                        onDeletePressed(product);
+                                      }
+                                    },
+                                    icon: Icons.delete,
+                                    backgroundColor: Colors.red,
                                   ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                .5,
-                                        child: Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              10, 10, 0, 0),
-                                          child: Text(product.productName,
-                                              style: GoogleFonts.montserrat(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 18)),
+                                ],
+                              ),
+                              child: Container(
+                                height: 150,
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10),
+                                  ),
+                                ),
+                                width: MediaQuery.of(context).size.width,
+                                margin: const EdgeInsets.only(top: 5),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: ConstrainedBox(
+                                        constraints: BoxConstraints(
+                                          maxHeight: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              .25,
+                                          maxWidth: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.25,
                                         ),
-                                      ),
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                .5,
-                                        child: Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              10, 5, 0, 0),
-                                          child: Text(
-                                              "INR ${product.productPrice}",
-                                              style: GoogleFonts.montserrat(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 15)),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                .5,
-                                        child: Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              10, 5, 0, 0),
-                                          child: Text(
-                                            "from ${product.sellerName}",
-                                            style: GoogleFonts.montserrat(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold),
+                                        child: ClipRRect(
+                                          borderRadius: const BorderRadius.all(
+                                            Radius.circular(10),
+                                          ),
+                                          child: Image.network(
+                                            product.productImage,
+                                            fit: BoxFit.fill,
                                           ),
                                         ),
                                       ),
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                .5,
-                                        child: Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              10, 5, 0, 0),
-                                          child: Text(
-                                              product.productDescription,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: GoogleFonts.ubuntu(
-                                                  fontSize: 12)),
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              .5,
+                                          child: Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                10, 10, 0, 0),
+                                            child: Text(product.productName,
+                                                style: GoogleFonts.rubik(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 18)),
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                .5,
-                                        child: Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              10, 5, 0, 0),
-                                          child: Text(
-                                              "Quantity : ${cartProduct.count}",
-                                              style: GoogleFonts.ubuntu(
-                                                  fontSize: 12)),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              .5,
+                                          child: Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                10, 5, 0, 0),
+                                            child: Text(
+                                                formatCurrency.format(
+                                                    product.productPrice),
+                                                style: GoogleFonts.rubik(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 15)),
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  Container(
-                                    margin: const EdgeInsets.only(left: 10),
-                                    child: IconButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pushNamed(
-                                              itemDetailsRoute,
-                                              arguments:
-                                                  ItemToDisplay(product));
-                                        },
-                                        icon: const Icon(Icons.arrow_forward)),
-                                  )
-                                ],
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              .5,
+                                          child: Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                10, 5, 0, 0),
+                                            child: Text(
+                                              "from ${product.sellerName}",
+                                              style: GoogleFonts.rubik(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              .5,
+                                          child: Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                10, 5, 0, 0),
+                                            child: Text(
+                                                product.productDescription,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: GoogleFonts.rubik(
+                                                    fontSize: 12)),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              .5,
+                                          child: Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                10, 5, 0, 0),
+                                            child: Text(
+                                                "Quantity : ${cartProduct.count}",
+                                                style: GoogleFonts.rubik(
+                                                    fontSize: 12)),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
