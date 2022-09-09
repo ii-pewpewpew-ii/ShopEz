@@ -101,6 +101,8 @@ class _UpdateProductsFormViewState extends State<UpdateProductsFormView> {
         onChanged: ((value) => setState(() => productName = value)),
       );
   Widget buildProductDescription({String? initial}) => TextFormField(
+        minLines: 5,
+        maxLines: 6,
         initialValue: initial,
         decoration: const InputDecoration(
           labelText: 'Product Description',

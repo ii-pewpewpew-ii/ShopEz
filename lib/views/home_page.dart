@@ -52,7 +52,6 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Flexible(
                     child: Container(
-                      //color: const Color.fromARGB(255, 160, 185, 135),
                       color: Colors.white,
                       margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                       child: StreamBuilder(

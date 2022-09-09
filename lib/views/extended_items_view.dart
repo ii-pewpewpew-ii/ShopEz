@@ -16,7 +16,7 @@ class ItemDetails extends StatefulWidget {
 class _ItemDetailsState extends State<ItemDetails> {
   final formatCurrency = NumberFormat.compactSimpleCurrency(
     name: "INR",
-    decimalDigits: 3, // change it to get decimal places
+    decimalDigits: 3, 
   );
   int count = 1;
   @override

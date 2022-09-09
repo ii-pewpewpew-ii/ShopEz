@@ -226,5 +226,3 @@ class _LoginViewState extends State<LoginView> {
 }
 
 const signup = "Sign Up";
-const policy =
-    "By continuing, you agree to Amazon's Conditions of Use and Privacy Notice.";
