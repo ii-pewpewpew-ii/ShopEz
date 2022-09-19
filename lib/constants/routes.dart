@@ -8,3 +8,4 @@ const String itemDetailsRoute = '/itemDetails/';
 const String updateProductRoute = '/updateProduct/';
 const String mainPageRoute = '/mainPageRoute/';
 const String searchPageRoute = '/searchPageRoute/';
+const String paymentPageRoute = '/paymentPageRoute/';

@@ -37,7 +37,10 @@ class _SellerHomeViewState extends State<SellerHomeView> {
                 Icons.home,
               ),
               label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Orders')
+          BottomNavigationBarItem(
+            icon: Icon(Icons.dashboard),
+            label: 'Orders',
+          )
         ],
       ),
     );

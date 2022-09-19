@@ -19,7 +19,6 @@ class CartView extends StatelessWidget {
     required this.onDeletePressed,
   }) : super(key: key);
   final CallBack onDeletePressed;
-
   final _cloudServices = CloudServices();
   final uId = AuthService.firebase().currentUser!.id;
   final email = AuthService.firebase().currentUser!.email;
@@ -76,21 +75,11 @@ class CartView extends StatelessWidget {
                                 end: Alignment.bottomCenter),
                           ),
                           child: TextButton(
-                            onPressed: () async {
-                              for (int i = 0; i < productDetails.length; i++) {
-                                CartItem cartProduct =
-                                    cartProducts.elementAt(i);
-                                Product product =
-                                    productDetails[cartProduct.productId];
-                                await _cloudServices.addOrderToSellerDash(
-                                    email: email,
-                                    sellerId: product.sellerId,
-                                    productId: product.productId,
-                                    count: cartProduct.count);
-                              }
-                              await _cloudServices.checkout(uId: uId);
+                            onPressed: () {
+                              Navigator.of(context).pushNamed(paymentPageRoute);
                             },
                             child: Text(
+                                // ignore: prefer_interpolation_to_compose_strings
                                 'Checkout Total : ' +
                                     formatCurrency.format(total),
                                 style: GoogleFonts.rubik(color: Colors.white)),
@@ -129,7 +118,7 @@ class CartView extends StatelessWidget {
                                 ],
                               ),
                               child: Container(
-                                height: 150,
+                                height: 155,
                                 decoration: const BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.all(

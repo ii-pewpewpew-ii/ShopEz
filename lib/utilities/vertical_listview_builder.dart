@@ -19,13 +19,12 @@ class ListViewBuilder extends StatelessWidget {
       : super(key: key);
   final Iterable<Product> products;
   final CallBack onDeletePressed;
-  //final CallBack onUpdatePressed;
-
+  
   @override
   Widget build(BuildContext context) {
     final formatCurrency = NumberFormat.compactSimpleCurrency(
       name: "INR",
-      decimalDigits: 0, // change it to get decimal places
+      decimalDigits: 0, 
     );
     return Scaffold(
       appBar: AppBar(

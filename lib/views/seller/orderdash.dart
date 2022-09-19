@@ -1,7 +1,6 @@
 import 'package:amazone_clone/cloud/cloud_service_products.dart';
 import 'package:amazone_clone/cloud/constants.dart';
 import 'package:amazone_clone/cloud/order_Details.dart';
-
 import 'package:amazone_clone/services/auth/auth_service.dart';
 import 'package:amazone_clone/utilities/show_ship_dialog.dart';
 import 'package:flutter/material.dart';
@@ -22,12 +21,7 @@ class OrderDash extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: const Color.fromARGB(
-            255,
-            195,
-            197,
-            189,
-          ),
+          backgroundColor: const Color.fromARGB(255, 195, 197, 189),
           title: Center(
             child: Image.asset(
               'assets/logo.png',

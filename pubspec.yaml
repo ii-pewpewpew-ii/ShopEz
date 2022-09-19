@@ -45,6 +45,9 @@ dependencies:
   flutter_zoom_drawer: ^3.0.3
   uuid: ^3.0.6
   intl: ^0.17.0
+  flutter_launcher_icons: ^0.10.0
+  flutter_stripe: ^5.0.0
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:
