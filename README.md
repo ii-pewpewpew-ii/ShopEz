@@ -1,4 +1,4 @@
-# amazone_clone
+# Shop-Ez
 
 A new Flutter project.
 
